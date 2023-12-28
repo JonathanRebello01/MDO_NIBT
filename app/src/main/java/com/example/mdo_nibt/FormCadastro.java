@@ -53,7 +53,7 @@ public class FormCadastro extends AppCompatActivity {
         });
     }
     private void IniciarComponentes(){
-        title_cadastro = findViewById(R.id.title_cadastro);
+        title_cadastro = findViewById(R.id.title_mdo);
 
         edit_nome = findViewById(R.id.edit_nome);
         edit_email = findViewById(R.id.edit_email);

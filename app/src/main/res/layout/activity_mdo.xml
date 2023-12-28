@@ -11,19 +11,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TipoTabela"
+    tools:context=".SelecaoMeditacao"
     android:background="@drawable/backgound">
-
-
-    <View
-        android:id="@+id/containerComponents"
-        style="@style/Containercomponents"
-        android:layout_width="match_parent"
-        android:layout_height="127dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
@@ -36,12 +25,12 @@
         />
 
     <TextView
-        android:id="@+id/title_cadastro"
+        android:id="@+id/title_mdo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/selecao_tabela"
+        android:text="@string/title_mdo"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,33 +38,33 @@
         app:layout_constraintTop_toTopOf="@+id/view"
         />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_ministerio"
-        style="@style/Button"
-        android:layout_width="125dp"
-        android:background="@drawable/button"
-        android:text="@string/tabela_ministério"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <View
+        android:id="@+id/containerComponents"
+        style="@style/Containercomponents"
+        android:layout_width="match_parent"
+        android:padding="30dp"
+        android:layout_height="345dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_ga"
+        android:id="@+id/bt_enviar_med"
         style="@style/Button"
         android:layout_width="125dp"
         android:background="@drawable/button"
-        android:text="@string/tabela_ga"
+        android:text="@string/bt_enviar"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/containerComponents"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
