@@ -45,7 +45,7 @@
 
 
     <EditText
-        android:id="@+id/edit_senha"
+        android:id="@+id/edit_senha_confirmar"
         style="@style/Edit_Text"
         android:hint="Senha"
         android:drawableRight="@drawable/ic_eye"
@@ -58,8 +58,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_entrar"
         style="@style/Button"
-        android:layout_width="110dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button"
         android:text="@string/entrar"
@@ -67,10 +66,11 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@id/edit_senha" />
+        app:layout_constraintTop_toBottomOf="@id/edit_senha_confirmar" />
 
     <ProgressBar
         android:id="@+id/progrssbar"
@@ -82,37 +82,20 @@
         app:layout_constraintTop_toBottomOf="@id/containerComponents"
         android:visibility="invisible"
         />
-    
+
     <TextView
         android:id="@+id/text_tela_cadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#00FF0000"
         android:text="@string/text_cadastro"
-        android:textSize="18sp"
         android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/progrssbar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progrssbar" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_tabela_tela_login"
-        style="@style/Button"
-        android:layout_width="110dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button"
-        android:text="@string/bt_tabela"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/containerComponents"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/bt_entrar"
-        app:layout_constraintTop_toBottomOf="@+id/edit_senha" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
 
