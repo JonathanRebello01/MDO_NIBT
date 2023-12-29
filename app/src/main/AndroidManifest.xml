@@ -15,9 +15,9 @@
         <activity android:name=".TelaPrincipal"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".FormCadastro" />
-        <activity android:name=".FormLogin" />
+        <activity android:name=".MDO" />
         <activity
-            android:name=".MDO"
+            android:name=".FormLogin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
