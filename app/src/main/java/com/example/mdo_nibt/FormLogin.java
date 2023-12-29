@@ -24,7 +24,7 @@ public class FormLogin extends AppCompatActivity {
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FormLogin.this, MDO.class);
+                Intent intent = new Intent(FormLogin.this, TelaPrincipal.class);
                 startActivity(intent);
             }
         });

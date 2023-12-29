@@ -12,11 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MDONIBT"
         tools:targetApi="31">
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".FormCadastro"/>
-        <activity android:name=".MDO"/>
+        <activity android:name=".TelaPrincipal"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".FormCadastro" />
+        <activity android:name=".FormLogin" />
         <activity
-            android:name=".FormLogin"
+            android:name=".MDO"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
