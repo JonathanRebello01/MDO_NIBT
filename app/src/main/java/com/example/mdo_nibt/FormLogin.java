@@ -21,6 +21,21 @@ public class FormLogin extends AppCompatActivity {
         getSupportActionBar().hide();
         IniciarComponentes();
 
+        visualizar_senha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(logicamaster == true){
+                    edt_senha.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    logicamaster = false;
+                }
+                else {
+                    edt_senha.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                    logicamaster = true;
+                }
+            }
+        });
+
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
