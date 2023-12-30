@@ -96,7 +96,7 @@ public class FormLogin extends AppCompatActivity {
                         public void run() {
                             telaPrincipal();
                         }
-                    },500);
+                    },0);
                 }
             }
         })
