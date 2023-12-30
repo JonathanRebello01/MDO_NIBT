@@ -117,14 +117,18 @@ public class FormCadastro extends AppCompatActivity {
         String nome = edit_nome.getText().toString();
         String ga_ministerio = edit_ga_ministerio.getText().toString();
         String tel = edit_tel.getText().toString();
+        String email = edit_email.getText().toString();
+        String senha = edit_senha.getText().toString();
 
 
         FirebaseFirestore banco = FirebaseFirestore.getInstance();
 
         Map<String,String> usuarios = new HashMap<>();
-        usuarios.put("nome", nome);
-        usuarios.put("ga_ministerio", ga_ministerio);
-        usuarios.put("telefone", tel);
+        usuarios.put("Nome", nome);
+        usuarios.put("Ga / Ministerio", ga_ministerio);
+        usuarios.put("Telefone", tel);
+        usuarios.put("E-mail", email);
+        usuarios.put("Senha", senha);
 
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
