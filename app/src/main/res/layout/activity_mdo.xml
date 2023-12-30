@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/view" />
 
     <ImageView
-        android:id="@+id/iconeUser"
+        android:id="@+id/iconeUser_mdo"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_user"
@@ -67,7 +67,7 @@
         style="@style/Edit_Text"
         android:hint="Nome"
         android:inputType="text"
-        app:layout_constraintStart_toEndOf="@id/iconeUser"
+        app:layout_constraintStart_toEndOf="@id/iconeUser_mdo"
         app:layout_constraintTop_toTopOf="@id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         />
@@ -80,7 +80,7 @@
         android:src="@drawable/ic_meditacao"
         app:layout_constraintEnd_toStartOf="@id/iconeDecoracao"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@id/iconeUser" />
+        app:layout_constraintTop_toBottomOf="@id/iconeUser_mdo" />
 
     <ImageView
         android:id="@+id/iconeDecoracao"
@@ -88,7 +88,7 @@
         android:layout_height="50dp"
         android:src="@drawable/ic_decoracao"
         android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@id/iconeUser"
+        app:layout_constraintTop_toBottomOf="@id/iconeUser_mdo"
         app:layout_constraintStart_toEndOf="@id/iconeMeditacao"
         app:layout_constraintEnd_toStartOf="@id/iconeOracao"
         />
@@ -101,15 +101,15 @@
         android:src="@drawable/ic_oracao"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toEndOf="@id/iconeDecoracao"
-        app:layout_constraintTop_toBottomOf="@id/iconeUser"
+        app:layout_constraintTop_toBottomOf="@id/iconeUser_mdo"
         />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_enviar_mdo"
+        android:id="@+id/bt_voltar_mdo"
         style="@style/Button"
         android:layout_width="125dp"
         android:background="@drawable/green_button"
-        android:text="@string/bt_enviar"
+        android:text="Voltar"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
