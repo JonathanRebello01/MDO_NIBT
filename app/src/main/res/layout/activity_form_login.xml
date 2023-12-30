@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@id/logo" />
 
     <EditText
-        android:id="@+id/edit_email"
+        android:id="@+id/edit_email_login"
         style="@style/Edit_Text"
         android:hint="E-mail"
         android:drawableRight="@drawable/ic_email"
@@ -45,14 +45,24 @@
 
 
     <EditText
-        android:id="@+id/edit_senha_confirmar"
+        android:id="@+id/edt_senha_login"
         style="@style/Edit_Text"
         android:hint="Senha"
-        android:drawableRight="@drawable/ic_eye"
         android:inputType="numberPassword"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@id/edit_email"
+        app:layout_constraintTop_toBottomOf="@id/edit_email_login"
+        />
+
+    <ImageView
+        android:id="@+id/visualizar_senha_login"
+        android:src="@drawable/ic_eye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="@id/edt_senha_login"
+        app:layout_constraintTop_toTopOf="@id/edt_senha_login"
+        app:layout_constraintBottom_toBottomOf="@id/edt_senha_login"
         />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -60,7 +70,7 @@
         style="@style/Button"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button"
+        android:background="@drawable/green_button"
         android:text="@string/entrar"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -70,10 +80,10 @@
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@id/edit_senha_confirmar" />
+        app:layout_constraintTop_toBottomOf="@id/edt_senha_login" />
 
     <ProgressBar
-        android:id="@+id/progrssbar"
+        android:id="@+id/login_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -94,7 +104,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progrssbar" />
+        app:layout_constraintTop_toBottomOf="@+id/login_progressbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

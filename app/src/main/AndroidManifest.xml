@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MDONIBT"
         tools:targetApi="31">
-        <activity android:name=".TelaPrincipal"/>
+        <activity android:name=".Historico" />
+        <activity android:name=".TelaPrincipal" />
         <activity android:name=".MainActivity" />
         <activity android:name=".FormCadastro" />
         <activity android:name=".MDO" />
