@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TelaPrincipal"
@@ -21,7 +28,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_user"
+        android:src="@drawable/ic_igrj"
         app:layout_constraintStart_toStartOf="@id/containerUser"
         app:layout_constraintEnd_toEndOf="@id/containerUser"
         app:layout_constraintTop_toTopOf="@id/containerUser"
@@ -40,15 +47,15 @@
         />
 
     <TextView
-        android:id="@+id/textNomeUsuario"
+        android:id="@+id/text_nome_usuario_telaprincipal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ofdjsoifvmn"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         app:layout_constraintTop_toBottomOf="@id/containerUser"
         app:layout_constraintStart_toEndOf="@id/iconeUser"
         />
@@ -65,32 +72,66 @@
         />
 
     <TextView
-        android:id="@+id/textEmailUsuario"
+        android:id="@+id/text_email_usuario_telaprincipal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="teste@gmail.com"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textNomeUsuario"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toBottomOf="@id/text_nome_usuario_telaprincipal"
         app:layout_constraintStart_toEndOf="@id/iconeEmail"
         />
 
     <Button
-        android:id="@+id/btn_deslogar"
+        android:id="@+id/btn_avancar_mdo_telaprincipal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textEmailUsuario"
-        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/text_email_usuario_telaprincipal"
+        android:background="@drawable/black_circle_button"
         android:padding="20dp"
-        android:layout_margin="20dp"
-        android:text="deslogar"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:text="+ Cadastrar MDO +"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textAllCaps="false"
         />
 
+    <Button
+        android:id="@+id/btn_ver_historico_telaprincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_avancar_mdo_telaprincipal"
+        android:background="@drawable/black_circle_button"
+        android:padding="20dp"
+        android:layout_margin="50dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
+        android:text="+ Ver Histórico +"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:id="@+id/btn_deslogar_telaprincipal"
+        android:text="Sair"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/black_circle_button"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
