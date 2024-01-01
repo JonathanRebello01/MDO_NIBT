@@ -3,6 +3,7 @@ package com.example.mdo_nibt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -63,6 +64,8 @@ public class FormCadastro extends AppCompatActivity {
                 }
                 else {
                     CadastrarUsuario(v);
+                    Intent intent = new Intent(FormCadastro.this, FormLogin.class);
+                    startActivity(intent);
                 }
             }
         });
