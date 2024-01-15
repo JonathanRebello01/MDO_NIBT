@@ -56,7 +56,7 @@
     <EditText
         android:id="@+id/edit_nome_cadastro"
         style="@style/Edit_Text"
-        android:hint="nome"
+        android:hint="@string/nome_hint"
         android:inputType="text"
         app:layout_constraintTop_toTopOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
@@ -66,7 +66,7 @@
     <EditText
         android:id="@+id/edit_email_cadastro"
         style="@style/Edit_Text"
-        android:hint="E-mail"
+        android:hint="@string/e_mail_hint"
         android:inputType="textEmailAddress"
         app:layout_constraintTop_toBottomOf="@+id/edit_nome_cadastro"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
@@ -76,7 +76,7 @@
     <EditText
         android:id="@+id/edit_ga_ministerio_cadastro"
         style="@style/Edit_Text"
-        android:hint="G.A / Ministério"
+        android:hint="@string/ga_ministerio_hint"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
@@ -85,7 +85,7 @@
     <EditText
         android:id="@+id/edit_tel_cadstro"
         style="@style/Edit_Text"
-        android:hint="Telefone"
+        android:hint="@string/telefone_hint"
         android:inputType="number"
         app:layout_constraintTop_toBottomOf="@+id/edit_ga_ministerio_cadastro"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
@@ -95,7 +95,7 @@
     <EditText
         android:id="@+id/edt_senha_confirmar_cadastro"
         style="@style/Edit_Text"
-        android:hint="Confirme a sua senha"
+        android:hint="@string/confirmar_senha_hint"
         android:inputType="numberPassword"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
@@ -104,7 +104,7 @@
     <EditText
         android:id="@+id/edit_senha_cadastro"
         style="@style/Edit_Text"
-        android:hint="Senha"
+        android:hint="@string/senha_hint"
         android:inputType="numberPassword"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"

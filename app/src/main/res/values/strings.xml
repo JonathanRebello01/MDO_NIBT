@@ -1,21 +1,39 @@
 <resources>
+
     <string name="app_name">MDO NIBT</string>
-    <string name="entrar">Entrar</string>
+
+<!--Tela Login-->
     <string name="text_cadastro">Ou se cadastre clicando aqui</string>
+    <string name="entrar">Entrar</string>
+
+<!--Formulários_Hint-->
+    <string name="senha_hint">Senha</string>
+    <string name="e_mail_hint">E-mail</string>
+    <string name="nome_hint">nome</string>
+    <string name="ga_ministerio_hint">G.A / Ministério</string>
+    <string name="telefone_hint">Telefone</string>
+    <string name="confirmar_senha_hint">Confirme a sua senha</string>
+
+<!--Tela Cadastro-->
     <string name="title_cadastro">Cadastro</string>
-
     <string name="bt_cadastrar">Cadastrar</string>
-    <string name="bt_limpar">Limpar</string>
 
+<!--Tela Principal-->
+    <string name="sair">Sair</string>
+    <string name="btn_ver_hist_rico">+ Ver Histórico +</string>
+    <string name="btn_cadastrar_mdo">+ Cadastrar MDO +</string>
+
+<!--Tela Histórico-->
+    <string name="titulo_historico">Histórico</string>
+
+<!--Tela MDO-->
     <string name="title_mdo">MDO</string>
-    <string name="dia_seg">Segunda</string>
-    <string name="dia_ter">Terça</string>
-    <string name="dia_qua">Quarta</string>
-    <string name="dia_qui">Quinta</string>
-    <string name="dia_sex">Sexta</string>
+    <string name="bnt_salvar_mdo">+ Salvar MDO +</string>
+    <string name="btn_voltar">Voltar</string>
+    <string name="meditacao_hin">med</string>
+    <string name="decoracao_hint">dec</string>
+    <string name="oracao_hint">ora</string>
     <string name="bt_enviar">Enviar</string>
-    <string name="bt_retornar">Retornar</string>
-    <string name="tabela_escolhida_GA">GA</string>
-    <string name="bt_alterar_dados">Alterar meus dados</string>
-    <string name="bt_excluir_dados">Excluir meus dados</string>
+
+
 </resources>

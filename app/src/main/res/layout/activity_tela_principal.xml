@@ -95,7 +95,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginStart="50dp"
-        android:text="+ Cadastrar MDO +"
+        android:text="@string/btn_cadastrar_mdo"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -112,7 +112,7 @@
         android:layout_margin="50dp"
         android:layout_marginEnd="80dp"
         android:layout_marginStart="80dp"
-        android:text="+ Ver Histórico +"
+        android:text="@string/btn_ver_hist_rico"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -121,7 +121,7 @@
 
     <Button
         android:id="@+id/btn_deslogar_telaprincipal"
-        android:text="Sair"
+        android:text="@string/sair"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/black_circle_button"

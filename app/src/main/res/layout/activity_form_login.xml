@@ -35,7 +35,7 @@
     <EditText
         android:id="@+id/edit_email_login"
         style="@style/Edit_Text"
-        android:hint="E-mail"
+        android:hint="@string/e_mail_hint"
         android:drawableRight="@drawable/ic_email"
         android:inputType="textEmailAddress"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/edt_senha_login"
         style="@style/Edit_Text"
-        android:hint="Senha"
+        android:hint="@string/senha_hint"
         android:inputType="numberPassword"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"

@@ -34,7 +34,6 @@ public class FormCadastro extends AppCompatActivity {
     private Button bt_cadastrar;
     private String usuarioID;
     private TextView title_cadastro;
-    String[] mensagens = {"Preencha todos os campos", "As senhas não conferem", "Cadastro realizado com sucesso"};
 
 
     @Override
@@ -56,10 +55,10 @@ public class FormCadastro extends AppCompatActivity {
                 String senha_confirmacao = edit_senha_confirmacao.getText().toString();
 
                 if(nome.isEmpty() || email.isEmpty() || ga_ministerio.isEmpty() || tel.isEmpty() || senha.isEmpty() || senha_confirmacao.isEmpty()){
-                    Snackbar snackbar = Snackbar.make(v, mensagens[0], Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(v, "Preencha TODOS os campos ; )",Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }else if (!senha.equals(senha_confirmacao)){
-                    Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(v, "As senhas não conferem", Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
                 else {
@@ -91,7 +90,7 @@ public class FormCadastro extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Snackbar snackbar = Snackbar.make(v, mensagens[2], Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(v, "Cadastro realizado com sucesso", Snackbar.LENGTH_SHORT);
                     snackbar.show();
                     salvarDadosUsuario();
                 }
@@ -100,14 +99,14 @@ public class FormCadastro extends AppCompatActivity {
                     try {
                         throw Objects.requireNonNull(task.getException());
                     }catch (FirebaseAuthWeakPasswordException e){
-                        erro = "Qual foi? A senha tá fraca! Coloca no mínimo 6 caracteres";
+                        erro = "Senha fraca; Forneça uma senha de, no mínimo 6 caracteres";
                     }catch (FirebaseAuthUserCollisionException e){
-                        erro = "Esse E-mail já tem no banco, só acessar tua conta, ou recuperar senha";
+                        erro = "E-mail já cadastrado";
                     }catch (FirebaseAuthInvalidCredentialsException e){
-                        erro = "Isso nem é um E-mail";
+                        erro = "E-mail inválido";
                     }
                     catch (Exception e){
-                        erro = "N sei qual foi o BO não";
+                        erro = "Houve um erro inesperado";
                     }
                     Snackbar snackbar = Snackbar.make(v, erro, Snackbar.LENGTH_SHORT);
                     snackbar.show();
