@@ -45,9 +45,8 @@
         android:id="@+id/containerComponents"
         style="@style/Containercomponents"
         android:layout_width="match_parent"
-        android:layout_height="530dp"
+        android:layout_height="580dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="328dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,6 +60,7 @@
         app:layout_constraintTop_toTopOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
+        app:layout_constraintBottom_toTopOf="@id/edit_email_cadastro"
         />
 
     <EditText
@@ -71,25 +71,71 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_nome_cadastro"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
+        app:layout_constraintBottom_toTopOf="@id/edit_ministerio_cadastro"
         />
 
-    <EditText
-        android:id="@+id/edit_ga_ministerio_cadastro"
-        style="@style/Edit_Text"
-        android:hint="@string/ga_ministerio_hint"
-        android:inputType="text"
+<!--    <EditText-->
+<!--        android:id="@+id/edit_ga_ministerio_cadastro"-->
+<!--        style="@style/Edit_Text"-->
+<!--        android:hint="@string/ga_ministerio_hint"-->
+<!--        android:inputType="text"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/containerComponents"-->
+<!--        app:layout_constraintStart_toStartOf="@id/containerComponents"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/edit_email_cadastro" />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_ministerio_cadastro"
+        style="@style/Text_Imput"
+        android:imeOptions="actionNext"
+        app:endIconMode="custom"
+        app:endIconCheckable="true"
+        app:endIconDrawable="@drawable/ic_arrow_drop"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@+id/edit_email_cadastro" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_email_cadastro"
+        app:layout_constraintBottom_toTopOf="@id/edit_tel_cadstro"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/expor_edit_ministerio_cadastro"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:hint="@string/ministerio_hint"
+            android:backgroundTint="@color/white"
+            android:focusable="false"
+            android:drawableTint="#00131212"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/edit_nome_lider_ga_cadstro"
+        style="@style/Edit_Text"
+        android:hint="@string/nome_do_lider_de_ga_completo"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/edit_ministerio_cadastro"
+        app:layout_constraintStart_toStartOf="@id/edit_ministerio_cadastro"
+        app:layout_constraintTop_toBottomOf="@+id/edit_ministerio_cadastro"
+        app:layout_constraintBottom_toTopOf="@id/edit_ministerio_cadastro"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"
+        />
 
     <EditText
         android:id="@+id/edit_tel_cadstro"
         style="@style/Edit_Text"
         android:hint="@string/telefone_hint"
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/edit_ga_ministerio_cadastro"
+        app:layout_constraintTop_toBottomOf="@+id/edit_ministerio_cadastro"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
+        app:layout_constraintBottom_toTopOf="@id/edit_senha_cadastro"
         />
 
     <EditText
@@ -99,7 +145,8 @@
         android:inputType="numberPassword"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@+id/edit_senha_cadastro" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_senha_cadastro"
+        app:layout_constraintBottom_toTopOf="@id/bt_cadastrar"/>
 
     <EditText
         android:id="@+id/edit_senha_cadastro"
@@ -108,23 +155,54 @@
         android:inputType="numberPassword"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@+id/edit_tel_cadstro" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_tel_cadstro"
+        app:layout_constraintBottom_toTopOf="@id/edt_senha_confirmar_cadastro"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_cadastrar"
         style="@style/Button"
+        android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
+
+        android:layout_marginStart="1dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/green_button"
         android:text="@string/bt_cadastrar"
         android:textAllCaps="false"
+
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/containerComponents"
-        app:layout_constraintStart_toStartOf="@+id/containerComponents"
+        app:layout_constraintBottom_toBottomOf="@id/containerComponents"
+        app:layout_constraintEnd_toStartOf="@id/sw_lider_ga"
+        app:layout_constraintStart_toStartOf="@id/containerComponents"
         app:layout_constraintTop_toBottomOf="@+id/edt_senha_confirmar_cadastro" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/sw_lider_ga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/bt_cadastrar"
+        app:layout_constraintEnd_toEndOf="@id/containerComponents"
+        app:layout_constraintStart_toEndOf="@id/bt_cadastrar" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="77dp"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_sw_ga_ministerio"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:fontFamily="casual"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@id/sw_lider_ga"
+        app:layout_constraintTop_toTopOf="@id/bt_cadastrar"
+        app:layout_constraintStart_toStartOf="@id/sw_lider_ga"
+        app:layout_constraintEnd_toEndOf="@id/sw_lider_ga"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

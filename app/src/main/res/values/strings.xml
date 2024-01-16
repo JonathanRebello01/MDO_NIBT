@@ -10,13 +10,15 @@
     <string name="senha_hint">Senha</string>
     <string name="e_mail_hint">E-mail</string>
     <string name="nome_hint">nome</string>
-    <string name="ga_ministerio_hint">G.A / Ministério</string>
+    <string name="ministerio_hint">Ministério</string>
     <string name="telefone_hint">Telefone</string>
     <string name="confirmar_senha_hint">Confirme a sua senha</string>
+    <string name="nome_do_lider_de_ga_completo">Nome do líder de GA (completo)</string>
 
 <!--Tela Cadastro-->
     <string name="title_cadastro">Cadastro</string>
     <string name="bt_cadastrar">Cadastrar</string>
+    <string name="texto_sw_ga_ministerio">A app vai ser usado no GA?</string>
 
 <!--Tela Principal-->
     <string name="sair">Sair</string>
@@ -34,6 +36,7 @@
     <string name="decoracao_hint">dec</string>
     <string name="oracao_hint">ora</string>
     <string name="bt_enviar">Enviar</string>
+
 
 
 </resources>

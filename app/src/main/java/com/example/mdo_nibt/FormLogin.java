@@ -22,7 +22,13 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class FormLogin extends AppCompatActivity {
     private TextView text_tela_cadastro;
@@ -30,7 +36,7 @@ public class FormLogin extends AppCompatActivity {
     private EditText edt_email, edt_senha;
     private ProgressBar progressBar;
     private ImageView visualizar_senha;
-    boolean logicamaster = true;
+    boolean password_invisible = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,13 +50,14 @@ public class FormLogin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(logicamaster == true){
+                if(password_invisible){
                     edt_senha.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    logicamaster = false;
+                    password_invisible = false;
                 }
+
                 else {
                     edt_senha.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                    logicamaster = true;
+                    password_invisible = true;
                 }
             }
         });
@@ -90,7 +97,6 @@ public class FormLogin extends AppCompatActivity {
 
                 if(task.isSuccessful()){
                     progressBar.setVisibility(View.VISIBLE);
-
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
