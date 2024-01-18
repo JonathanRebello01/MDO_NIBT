@@ -14,9 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,44 +25,41 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class MDO extends AppCompatActivity {
 
-    private EditText edt_nome_bandido, edt_meditacao, edt_decoracao, edt_oracao;
-    private Button btn_adicionar_bandido, btn_voltar;
+    private EditText edt_nome_mdo, edt_meditacao, edt_decoracao, edt_oracao;
+    private Button btn_adicionar_mdo, btn_voltar;
     private ImageView ic_usuario, ic_meditacao, ic_decoracao, ic_oracao;
     private ProgressBar mdo_progressbar;
     private String usuarioID;
     private String ga_ministerio;
-    FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
+    private Boolean isGA = false;
+    private FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdo);
         getSupportActionBar().hide();
         iniciarComponentes();
-        btn_adicionar_bandido.setOnClickListener(new View.OnClickListener() {
+
+        btn_adicionar_mdo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nome = edt_nome_bandido.getText().toString();
+                String nome = edt_nome_mdo.getText().toString();
                 String meditacao = edt_meditacao.getText().toString();
                 String decoracao = edt_decoracao.getText().toString();
                 String oracao = edt_oracao.getText().toString();
 
-                if(nome != null && meditacao != null && decoracao != null && oracao != null) {
+                Pessoa pessoa = new Pessoa(nome, meditacao, decoracao, oracao);
+                FirebaseFirestore banco_salvar = FirebaseFirestore.getInstance();
+                usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                    Pessoa pessoa = new Pessoa(nome, meditacao, decoracao, oracao);
-
-                    FirebaseFirestore banco_salvar = FirebaseFirestore.getInstance();
-                    usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                    DocumentReference documentReference = banco_salvar.collection(ga_ministerio + "/" + "MDOs" + "/" + Util.dataAtual()).document(usuarioID);
-
+                if(isGA){
+                    DocumentReference documentReference = banco_salvar.collection( "NIBT" + "/" + "MDOs" + "/" + "GAs" + "/" + ga_ministerio + "/" + Util.dataAtual()).document(usuarioID);
                     // Adquira os dados atuais do documento
                     documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
@@ -82,14 +80,14 @@ public class MDO extends AppCompatActivity {
                                             public void onSuccess(Void aVoid) {
                                                 // Dados atualizados com sucesso
                                                 Toast.makeText(getApplicationContext(), "Dados atualizados com sucesso", Toast.LENGTH_SHORT).show();
-                                                edt_nome_bandido.setText("");
+                                                edt_nome_mdo.setText("");
                                                 edt_meditacao.setText("");
                                                 edt_decoracao.setText("");
                                                 edt_oracao.setText("");
                                                 new Handler().postDelayed(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        edt_nome_bandido.setVisibility(View.INVISIBLE);
+                                                        edt_nome_mdo.setVisibility(View.INVISIBLE);
                                                         edt_meditacao.setVisibility(View.INVISIBLE);
                                                         edt_decoracao.setVisibility(View.INVISIBLE);
                                                         edt_oracao.setVisibility(View.INVISIBLE);
@@ -103,7 +101,7 @@ public class MDO extends AppCompatActivity {
                                                 new Handler().postDelayed(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        edt_nome_bandido.setVisibility(View.VISIBLE);
+                                                        edt_nome_mdo.setVisibility(View.VISIBLE);
                                                         edt_meditacao.setVisibility(View.VISIBLE);
                                                         edt_decoracao.setVisibility(View.VISIBLE);
                                                         edt_oracao.setVisibility(View.VISIBLE);
@@ -137,14 +135,14 @@ public class MDO extends AppCompatActivity {
                                             public void onSuccess(Void aVoid) {
                                                 // Dados adicionados com sucesso
                                                 Toast.makeText(getApplicationContext(), "Dados atualizados com sucesso", Toast.LENGTH_SHORT).show();
-                                                edt_nome_bandido.setText("");
+                                                edt_nome_mdo.setText("");
                                                 edt_meditacao.setText("");
                                                 edt_decoracao.setText("");
                                                 edt_oracao.setText("");
                                                 new Handler().postDelayed(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        edt_nome_bandido.setVisibility(View.INVISIBLE);
+                                                        edt_nome_mdo.setVisibility(View.INVISIBLE);
                                                         edt_meditacao.setVisibility(View.INVISIBLE);
                                                         edt_decoracao.setVisibility(View.INVISIBLE);
                                                         edt_oracao.setVisibility(View.INVISIBLE);
@@ -158,7 +156,7 @@ public class MDO extends AppCompatActivity {
                                                 new Handler().postDelayed(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        edt_nome_bandido.setVisibility(View.VISIBLE);
+                                                        edt_nome_mdo.setVisibility(View.VISIBLE);
                                                         edt_meditacao.setVisibility(View.VISIBLE);
                                                         edt_decoracao.setVisibility(View.VISIBLE);
                                                         edt_oracao.setVisibility(View.VISIBLE);
@@ -183,8 +181,126 @@ public class MDO extends AppCompatActivity {
                     });
                 }
                 else {
-                    Snackbar snackbar = Snackbar.make(v, "Preencha TODOS os campos ; )", Snackbar.LENGTH_SHORT);
-                    snackbar.show();
+                    DocumentReference documentReference = banco_salvar.collection( "NIBT" + "/" + "MDOs" + "/" + "Ministerios" + "/" + ga_ministerio +  "/" + Util.dataAtual()).document(usuarioID);
+                    // Adquira os dados atuais do documento
+                    documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            // Verifique se o documento já existe
+                            if (documentSnapshot.exists()) {
+                                // O documento já existe, então adicione a nova pessoa à lista existente
+                                List<Pessoa> pessoas = (List<Pessoa>) documentSnapshot.get("pessoas");
+                                if (pessoas == null) {
+                                    pessoas = new ArrayList<>();
+                                }
+                                pessoas.add(pessoa);
+
+                                // Atualize o documento com a lista atualizada
+                                documentReference.update("pessoas", pessoas)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                // Dados atualizados com sucesso
+                                                Toast.makeText(getApplicationContext(), "Dados atualizados com sucesso", Toast.LENGTH_SHORT).show();
+                                                edt_nome_mdo.setText("");
+                                                edt_meditacao.setText("");
+                                                edt_decoracao.setText("");
+                                                edt_oracao.setText("");
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        edt_nome_mdo.setVisibility(View.INVISIBLE);
+                                                        edt_meditacao.setVisibility(View.INVISIBLE);
+                                                        edt_decoracao.setVisibility(View.INVISIBLE);
+                                                        edt_oracao.setVisibility(View.INVISIBLE);
+                                                        ic_usuario.setVisibility(View.INVISIBLE);
+                                                        ic_meditacao.setVisibility(View.INVISIBLE);
+                                                        ic_decoracao.setVisibility(View.INVISIBLE);
+                                                        ic_oracao.setVisibility(View.INVISIBLE);
+                                                        mdo_progressbar.setVisibility(View.VISIBLE);
+                                                    }
+                                                }, 0);
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        edt_nome_mdo.setVisibility(View.VISIBLE);
+                                                        edt_meditacao.setVisibility(View.VISIBLE);
+                                                        edt_decoracao.setVisibility(View.VISIBLE);
+                                                        edt_oracao.setVisibility(View.VISIBLE);
+                                                        ic_usuario.setVisibility(View.VISIBLE);
+                                                        ic_meditacao.setVisibility(View.VISIBLE);
+                                                        ic_decoracao.setVisibility(View.VISIBLE);
+                                                        ic_oracao.setVisibility(View.VISIBLE);
+                                                        mdo_progressbar.setVisibility(View.INVISIBLE);
+                                                    }
+                                                }, 1500);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Trate falha ao atualizar dados
+                                                Toast.makeText(getApplicationContext(), "Erro ao atualizar dados", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            } else {
+                                // O documento não existe, crie um novo documento com a lista contendo a primeira pessoa
+                                List<Pessoa> pessoas = new ArrayList<>();
+                                pessoas.add(pessoa);
+
+                                // Crie o novo documento
+                                documentReference.set(new HashMap<String, Object>() {{
+                                            put("pessoas", pessoas);
+                                        }})
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                // Dados adicionados com sucesso
+                                                Toast.makeText(getApplicationContext(), "Dados atualizados com sucesso", Toast.LENGTH_SHORT).show();
+                                                edt_nome_mdo.setText("");
+                                                edt_meditacao.setText("");
+                                                edt_decoracao.setText("");
+                                                edt_oracao.setText("");
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        edt_nome_mdo.setVisibility(View.INVISIBLE);
+                                                        edt_meditacao.setVisibility(View.INVISIBLE);
+                                                        edt_decoracao.setVisibility(View.INVISIBLE);
+                                                        edt_oracao.setVisibility(View.INVISIBLE);
+                                                        ic_usuario.setVisibility(View.INVISIBLE);
+                                                        ic_meditacao.setVisibility(View.INVISIBLE);
+                                                        ic_decoracao.setVisibility(View.INVISIBLE);
+                                                        ic_oracao.setVisibility(View.INVISIBLE);
+                                                        mdo_progressbar.setVisibility(View.VISIBLE);
+                                                    }
+                                                }, 0);
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        edt_nome_mdo.setVisibility(View.VISIBLE);
+                                                        edt_meditacao.setVisibility(View.VISIBLE);
+                                                        edt_decoracao.setVisibility(View.VISIBLE);
+                                                        edt_oracao.setVisibility(View.VISIBLE);
+                                                        ic_usuario.setVisibility(View.VISIBLE);
+                                                        ic_meditacao.setVisibility(View.VISIBLE);
+                                                        ic_decoracao.setVisibility(View.VISIBLE);
+                                                        ic_oracao.setVisibility(View.VISIBLE);
+                                                        mdo_progressbar.setVisibility(View.INVISIBLE);
+                                                    }
+                                                }, 1500);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Trate falha ao adicionar dados
+                                                Toast.makeText(getApplicationContext(), "Erro ao adicionar dados", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -200,12 +316,12 @@ public class MDO extends AppCompatActivity {
     }
 
     private void iniciarComponentes(){
-        edt_nome_bandido = findViewById(R.id.edt_nomeBandido);
+        edt_nome_mdo = findViewById(R.id.edt_nome_mdo);
         edt_meditacao = findViewById(R.id.edt_meditacao);
         edt_decoracao = findViewById(R.id.edt_decoracao);
         edt_oracao = findViewById(R.id.edt_oracao);
 
-        btn_adicionar_bandido = findViewById(R.id.btn_adicionar_bandido);
+        btn_adicionar_mdo = findViewById(R.id.btn_adicionar_mdo);
         btn_voltar = findViewById(R.id.bt_voltar_mdo);
 
         mdo_progressbar = findViewById(R.id.mdo_progressbar);
@@ -227,8 +343,13 @@ public class MDO extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 if(documentSnapshot != null){
-                    ga_ministerio = documentSnapshot.getString("ga_ministerio");
-
+                    if(documentSnapshot.getString("Lider") != null){
+                        ga_ministerio = documentSnapshot.getString("Lider");
+                        isGA = true;
+                    }
+                    else {
+                        ga_ministerio = documentSnapshot.getString("Ministerio");
+                    }
                 }
             }
         });

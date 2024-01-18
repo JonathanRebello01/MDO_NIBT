@@ -7,7 +7,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -47,7 +47,7 @@ public class FormCadastro extends AppCompatActivity {
     private Context ctx;
     private ArrayList<String> MINISTERIOS = new ArrayList<>();
     private SwitchCompat sw_lider_ga;
-    private boolean lider_ga = false;
+    private boolean isGA = false;
     private ArrayAdapter<String> adapterMinisterios;
     private Map<String,String> usuarios = null;
 
@@ -65,14 +65,14 @@ public class FormCadastro extends AppCompatActivity {
         sw_lider_ga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!lider_ga){
+                if(!isGA){
 
                     complete_ga_ministerios.setVisibility(View.INVISIBLE);
                     caixa_complete_ga_ministerios.setVisibility(View.INVISIBLE);
 
                     edt_nome_lider_ga.setVisibility(View.VISIBLE);
 
-                    lider_ga = true;
+                    isGA = true;
                 }
                 else {
 
@@ -81,7 +81,7 @@ public class FormCadastro extends AppCompatActivity {
                     complete_ga_ministerios.setVisibility(View.VISIBLE);
                     caixa_complete_ga_ministerios.setVisibility(View.VISIBLE);
 
-                    lider_ga = false;
+                    isGA = false;
                 }
             }
         });
@@ -108,7 +108,7 @@ public class FormCadastro extends AppCompatActivity {
 
 
 
-                if (lider_ga) {
+                if (isGA) {
                     if (nome.isEmpty() || email.isEmpty() || nome_lider_ga.isEmpty() || tel.isEmpty() || senha.isEmpty() || senha_confirmacao.isEmpty()) {
                         Snackbar snackbar = Snackbar.make(v, "Preencha TODOS os campos ; )", Snackbar.LENGTH_SHORT);
                         snackbar.show();
@@ -207,17 +207,14 @@ public class FormCadastro extends AppCompatActivity {
         String email = edit_email.getText().toString();
         String senha = edit_senha.getText().toString();
 
-
-        System.out.println("teste" + lider_ga);
-
         FirebaseFirestore banco = FirebaseFirestore.getInstance();
 
-        if (!lider_ga){
+        if (!isGA){
             Map<String,String> usuarios = new HashMap<>();
             usuarios.put("Nome", nome);
             usuarios.put("Ministerio", ministerio);
             usuarios.put("Telefone", tel);
-            usuarios.put("E-mail", email);
+            usuarios.put("Email", email);
             usuarios.put("Senha", senha);
 
             usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -239,9 +236,9 @@ public class FormCadastro extends AppCompatActivity {
         else {
             Map<String,String> usuarios = new HashMap<>();
             usuarios.put("Nome", nome);
-            usuarios.put("Líder", nome_lider_ga);
+            usuarios.put("Lider", nome_lider_ga);
             usuarios.put("Telefone", tel);
-            usuarios.put("E-mail", email);
+            usuarios.put("Email", email);
             usuarios.put("Senha", senha);
 
             usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
