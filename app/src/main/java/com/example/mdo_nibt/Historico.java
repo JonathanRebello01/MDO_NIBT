@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,15 +20,23 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Historico extends AppCompatActivity {
     private RecyclerView rv_historico;
     private String usuarioID, ga_ministerio;
     private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
     private Boolean isGA = false;
-    private String listaDatas;
+    private  ArrayList<String> listaDatas;
+    private List<String> listaFormatada = new ArrayList<>();
+    private Context ctx;
 
 
     @Override
@@ -35,15 +45,8 @@ public class Historico extends AppCompatActivity {
         setContentView(R.layout.activity_historico);
         getSupportActionBar().hide();
         iniciarComponentes();
+        ctx = this;
 
-        ArrayList<String> lista = new ArrayList<>();
-        lista.add("14/04/2004");
-        lista.add("20/01/2001");
-        lista.add("02/12/2005");
-
-        HistoricoAdapter historicoAdapter = new HistoricoAdapter(lista);
-        rv_historico.setAdapter(historicoAdapter);
-        rv_historico.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
@@ -56,70 +59,29 @@ public class Historico extends AppCompatActivity {
         super.onStart();
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference documentReference = banco_recuperar.collection("Usuarios").document(usuarioID);
+        DocumentReference getdata = banco_recuperar.collection("/NIBT/historicoUsuarios/datas").document(usuarioID);
 
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        getdata.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                if (documentSnapshot != null) {
-                    if (documentSnapshot.getString("Lider") != null) {
-                        ga_ministerio = documentSnapshot.getString("Lider");
-                        isGA = true;
-                    } else {
-                        ga_ministerio = documentSnapshot.getString("Ministerio");
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value != null){
+                    listaDatas = (ArrayList<String>)value.getData().get("data");
+
+                    assert listaDatas != null;
+                    for (String dataNumerica : listaDatas) {
+                        String dataFormatada = formatarData(dataNumerica);
+                        listaFormatada.add(dataFormatada);
                     }
+
+
+                    HistoricoAdapter historicoAdapter = new HistoricoAdapter((ArrayList<String>) listaFormatada);
+                    rv_historico.setAdapter(historicoAdapter);
+                    rv_historico.setLayoutManager(new LinearLayoutManager(ctx));
                 }
-
-//                if (isGA) {
-//                    DocumentReference documentReference1 = banco_recuperar.document("NIBT" + "/" + "MDOs" + "/" + "GAs" + "/" + ga_ministerio);
-//
-//                    banco_recuperar.collection("NIBT").document("MDOs").collection("GAs").document(ga_ministerio).get()
-//                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                                    if (task.isSuccessful()){
-//
-//                                        DocumentSnapshot collectionReference = task.getResult();
-//
-//                                        if (collectionReference != null) {
-//                                            for (DocumentReference subcollectionRef : collectionReference.getDocuments()) {
-//                                                // Obtendo o nome de cada subcoleção
-//                                                String nomeSubcolecao = subcollectionRef.getId();
-//                                                Log.d("TAG", "Nome da subcoleção: " + nomeSubcolecao);
-//                                            }
-//
-//                                    }
-//                                }
-//                            });
-
-//                    documentReference1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                        @Override
-//                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-//                            if (value != null) {
-//
-//
-//
-//                                System.out.println("teste: " + value);
-//
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    DocumentReference documentReference1 = banco_recuperar.document("NIBT" + "/" + "Ministerios" + "/" + "GAs" + "/" + ga_ministerio);
-//                    documentReference1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                        @Override
-//                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-//                            if (value != null) {
-//                                listaDatas =value.toString();
-//
-//
-//                                System.out.println("teste: " + value);
-//
-//                            }
-//                        }
-//                    });
-//                }
             }
         });
+    }
+    private static String formatarData(String data) {
+        return data.substring(0, 2) + "/" + data.substring(2, 4) + "/" + data.substring(4);
     }
 }
