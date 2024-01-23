@@ -18,6 +18,13 @@
         <item name="android:layout_marginTop">10dp</item>
     </style>
 
+    <style name="Edit_Text_vizualizacao_mdo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/edit_text_vizualizacao_mdo</item>
+        <item name="android:padding">10dp</item>
+</style>
+
     <style name="Text_Imput" parent="TextAppearance.AppCompat.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

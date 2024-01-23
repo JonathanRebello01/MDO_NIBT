@@ -3,6 +3,7 @@ package com.example.mdo_nibt;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 
 public class HistoricoAdapter extends RecyclerView.Adapter<HistoricoAdapter.HistoricoViewHolder> {
 
@@ -20,31 +22,6 @@ public class HistoricoAdapter extends RecyclerView.Adapter<HistoricoAdapter.Hist
     public HistoricoAdapter(ArrayList<String> lista, RecyclerViewInterface recyclerViewInterface){
         this.lista = lista;
         this.recyclerViewInterface = recyclerViewInterface;
-    }
-
-    public static class HistoricoViewHolder extends RecyclerView.ViewHolder {
-
-        TextView dataMDO;
-        ImageView imagemMDO;
-        public HistoricoViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
-            super(itemView);
-            dataMDO = itemView.findViewById(R.id.TxtDate_historico);
-            imagemMDO = itemView.findViewById(R.id.logo_gaministerio_historico);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (recyclerViewInterface != null){
-                        int pos = getAdapterPosition();
-
-                        if (pos != RecyclerView.NO_POSITION){
-                            recyclerViewInterface.onItemClick(pos);
-                        }
-                    }
-                }
-            });
-        }
-
     }
 
     //Ao criar o View Holder
@@ -74,6 +51,41 @@ public class HistoricoAdapter extends RecyclerView.Adapter<HistoricoAdapter.Hist
         return lista.size();
     }
 
+    public static class HistoricoViewHolder extends RecyclerView.ViewHolder {
 
+        Button dataMDO;
+        ImageView imagemMDO;
+        public HistoricoViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+            super(itemView);
+            dataMDO = itemView.findViewById(R.id.btn_data_historico);
+            imagemMDO = itemView.findViewById(R.id.logo_gaministerio_historico);
+            dataMDO.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+
+                        if (pos != RecyclerView.NO_POSITION){
+                            recyclerViewInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+
+                        if (pos != RecyclerView.NO_POSITION){
+                            recyclerViewInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
+        }
+
+    }
 
 }

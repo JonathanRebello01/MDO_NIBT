@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class Historico extends AppCompatActivity implements RecyclerViewInterface {
     private RecyclerView rv_historico;
-    private String usuarioID, ga_ministerio;
+    private String usuarioID;
     private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
     private Boolean isGA = false;
     private  ArrayList<String> listaDatas;
@@ -47,8 +47,6 @@ public class Historico extends AppCompatActivity implements RecyclerViewInterfac
         getSupportActionBar().hide();
         iniciarComponentes();
         ctx = this;
-
-
     }
 
     private void iniciarComponentes(){

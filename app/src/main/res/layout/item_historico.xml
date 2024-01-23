@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    style="@style/Edit_Text"
     android:layout_height="wrap_content"
-    android:background="#D8D8D8"
     android:layout_margin="8dp"
     >
 
@@ -15,24 +15,29 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/TxtDate_historico"
+        app:layout_constraintEnd_toStartOf="@id/btn_data_historico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_igrj" />
 
-    <EditText
-        android:id="@+id/TxtDate_historico"
+    <Button
+        android:id="@+id/btn_data_historico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:background="@drawable/black_circle_button"
+        android:padding="20dp"
         android:ems="10"
+        android:textColor="@color/white"
         android:inputType="date"
         android:text="dd/mm/aaaa"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@id/logo_gaministerio_historico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/logo_gaministerio_historico"
         app:layout_constraintTop_toTopOf="@id/logo_gaministerio_historico"
-        tools:layout_editor_absoluteX="144dp"
-        tools:layout_editor_absoluteY="339dp" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
