@@ -27,4 +27,7 @@ public class Util {
         // Imprime a data atual em string
         return dataAtualString;
     }
+    public static String formatarData(String data) {
+        return data.substring(0, 2) + "/" + data.substring(2, 4) + "/" + data.substring(4);
+    }
 }

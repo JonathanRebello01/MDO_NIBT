@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -29,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Historico extends AppCompatActivity {
+public class Historico extends AppCompatActivity implements RecyclerViewInterface {
     private RecyclerView rv_historico;
     private String usuarioID, ga_ministerio;
     private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
@@ -69,19 +70,23 @@ public class Historico extends AppCompatActivity {
 
                     assert listaDatas != null;
                     for (String dataNumerica : listaDatas) {
-                        String dataFormatada = formatarData(dataNumerica);
+                        String dataFormatada = Util.formatarData(dataNumerica);
                         listaFormatada.add(dataFormatada);
                     }
 
 
-                    HistoricoAdapter historicoAdapter = new HistoricoAdapter((ArrayList<String>) listaFormatada);
+                    HistoricoAdapter historicoAdapter = new HistoricoAdapter((ArrayList<String>) listaFormatada, Historico.this::onItemClick);
                     rv_historico.setAdapter(historicoAdapter);
                     rv_historico.setLayoutManager(new LinearLayoutManager(ctx));
                 }
             }
         });
     }
-    private static String formatarData(String data) {
-        return data.substring(0, 2) + "/" + data.substring(2, 4) + "/" + data.substring(4);
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(Historico.this, VisualizacaoMDO.class);
+        intent.putExtra("data", listaDatas.get(position));
+        startActivity(intent);
     }
 }
