@@ -56,9 +56,10 @@ public class Historico extends AppCompatActivity implements RecyclerViewInterfac
     @Override
     protected void onStart() {
         super.onStart();
+        listaFormatada.clear();
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference getdata = banco_recuperar.collection("/NIBT/historicoUsuarios/datas").document(usuarioID);
+        DocumentReference getdata = banco_recuperar.collection("NIBT" + "/" + "historicoUsuarios" + "/" + "datas").document(usuarioID);
 
         getdata.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -71,7 +72,6 @@ public class Historico extends AppCompatActivity implements RecyclerViewInterfac
                         String dataFormatada = Util.formatarData(dataNumerica);
                         listaFormatada.add(dataFormatada);
                     }
-
 
                     HistoricoAdapter historicoAdapter = new HistoricoAdapter((ArrayList<String>) listaFormatada, Historico.this::onItemClick);
                     rv_historico.setAdapter(historicoAdapter);

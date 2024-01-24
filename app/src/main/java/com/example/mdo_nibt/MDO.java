@@ -14,10 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -58,7 +56,7 @@ public class MDO extends AppCompatActivity {
 
                 salvaDataFirestore();
 
-                Pessoa pessoa = new Pessoa(nome, meditacao, decoracao, oracao);
+                mPessoaModel pessoa = new mPessoaModel(nome, meditacao, decoracao, oracao);
                 usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 if(isGA){
                     DocumentReference documentReference = banco_salvar.collection( "NIBT" + "/" + "GAs" + "/" + ga_ministerio + "/" + Util.dataAtual() + "/" + "MDOs").document(usuarioID);
@@ -69,7 +67,7 @@ public class MDO extends AppCompatActivity {
                             // Verifique se o documento já existe
                             if (documentSnapshot.exists()) {
                                 // O documento já existe, então adicione a nova pessoa à lista existente
-                                List<Pessoa> pessoas = (List<Pessoa>) documentSnapshot.get("pessoas");
+                                List<mPessoaModel> pessoas = (List<mPessoaModel>) documentSnapshot.get("pessoas");
                                 if (pessoas == null) {
                                     pessoas = new ArrayList<>();
                                 }
@@ -98,7 +96,7 @@ public class MDO extends AppCompatActivity {
                                         });
                             } else {
                                 // O documento não existe, crie um novo documento com a lista contendo a primeira pessoa
-                                List<Pessoa> pessoas = new ArrayList<>();
+                                List<mPessoaModel> pessoas = new ArrayList<>();
                                 pessoas.add(pessoa);
 
                                 // Crie o novo documento
@@ -137,7 +135,7 @@ public class MDO extends AppCompatActivity {
                             // Verifique se o documento já existe
                             if (documentSnapshot.exists()) {
                                 // O documento já existe, então adicione a nova pessoa à lista existente
-                                List<Pessoa> pessoas = (List<Pessoa>) documentSnapshot.get("pessoas");
+                                List<mPessoaModel> pessoas = (List<mPessoaModel>) documentSnapshot.get("pessoas");
                                 if (pessoas == null) {
                                     pessoas = new ArrayList<>();
                                 }
@@ -166,7 +164,7 @@ public class MDO extends AppCompatActivity {
                                         });
                             } else {
                                 // O documento não existe, crie um novo documento com a lista contendo a primeira pessoa
-                                List<Pessoa> pessoas = new ArrayList<>();
+                                List<mPessoaModel> pessoas = new ArrayList<>();
                                 pessoas.add(pessoa);
 
                                 // Crie o novo documento

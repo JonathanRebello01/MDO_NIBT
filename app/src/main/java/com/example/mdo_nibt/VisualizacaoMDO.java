@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -17,17 +18,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class VisualizacaoMDO extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TextView txt_titulo;
-    private String data, dataFormatada;
+    private String data, dataFormatada, usuarioID, ga_ministerio, dataDesformatada;
     private ArrayList<VisualizacaoMDOModel> visualizacaoMDOModel = new ArrayList<>();
-    private String usuarioID;
     private final FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
     private Boolean isGA = false;
-    private String ga_ministerio;
+    Context ctx;
+//    private static List<mPessoaModel> listaPessoas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +38,15 @@ public class VisualizacaoMDO extends AppCompatActivity {
         setContentView(R.layout.activity_vizualizacao_mdo);
         getSupportActionBar().hide();
         iniciarComponentes();
+        ctx = this;
 
         Intent intent = getIntent();
         if (intent != null) {
             data = intent.getStringExtra("data");
             dataFormatada = Util.formatarData(data);
             txt_titulo.setText(dataFormatada);
+            dataDesformatada = Util.desformatarData(dataFormatada);
         }
-
-        setUpVizualizacaoMDOModels();
-
-        VizualizacaoMDOAdapter adapter = new VizualizacaoMDOAdapter(this, visualizacaoMDOModel);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
     private void iniciarComponentes(){
         txt_titulo = findViewById(R.id.title_visualizacao_mdo);
@@ -82,23 +80,67 @@ public class VisualizacaoMDO extends AppCompatActivity {
                     else {
                         ga_ministerio = documentSnapshot.getString("Ministerio");
                     }
-//                    if (isGA = true) {
-//                        DocumentReference getdata = banco_recuperar.collection(caminho do ga).document(usuarioID);
-//                        getdata.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                            @Override
-//                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-//                                if (value != null) {
-//
-//                                }
-//                            }
-//                        });
-//                    }
-//                    else {
-//
-//                    }
+                    if (isGA) {
+                        DocumentReference getdata = banco_recuperar.collection("NIBT" + "/" + "GAs" + "/" + ga_ministerio + "/" + dataDesformatada + "/" + "MDOs").document(usuarioID);
+                        getdata.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if (value != null) {
+                                    setUpVizualizacaoMDOModels();
+
+                                    VizualizacaoMDOAdapter adapter = new VizualizacaoMDOAdapter(ctx, (ArrayList<VisualizacaoMDOModel>) converterMapParaLista(value.getData()));
+                                    recyclerView.setAdapter(adapter);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(ctx));
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        DocumentReference getdata = banco_recuperar.collection("NIBT" + "/" + "Ministerios" + "/" + ga_ministerio + "/" + dataDesformatada + "/" + "MDOs").document(usuarioID);
+                        getdata.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if (value != null) {
+                                    setUpVizualizacaoMDOModels();
+
+                                    VizualizacaoMDOAdapter adapter = new VizualizacaoMDOAdapter(ctx, (ArrayList<VisualizacaoMDOModel>) converterMapParaLista(value.getData()));
+                                    recyclerView.setAdapter(adapter);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(ctx));
+                                }
+                            }
+                        });
+                    }
 
                 }
             }
         });
     }
+
+    public static List<VisualizacaoMDOModel> converterMapParaLista(Map<String, Object> mapa) {
+
+        List<VisualizacaoMDOModel> listaVisualizacaoMDOModel = new ArrayList<>();
+
+        if (mapa.containsKey("pessoas")) {
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> pessoas = (List<Map<String, Object>>) mapa.get("pessoas");
+
+            for (Map<String, Object> pessoaMap : pessoas) {
+                String nome = (String) pessoaMap.get("nome");
+                String meditacao = (String) pessoaMap.get("meditacao");
+                String decoracao = (String) pessoaMap.get("decoracao");
+                String oracao = (String) pessoaMap.get("oracao");
+
+                System.out.println("Nome: " + nome);
+                System.out.println("Meditação: " + meditacao);
+                System.out.println("Decoração: " + decoracao);
+                System.out.println("Oração: " + oracao);
+                System.out.println();
+
+                VisualizacaoMDOModel visualizacaoMDOModel = new VisualizacaoMDOModel(nome, meditacao, decoracao, oracao);
+                listaVisualizacaoMDOModel.add(visualizacaoMDOModel);
+            }
+        }
+        return listaVisualizacaoMDOModel;
+    }
+
 }

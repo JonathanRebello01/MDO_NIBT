@@ -30,4 +30,7 @@ public class Util {
     public static String formatarData(String data) {
         return data.substring(0, 2) + "/" + data.substring(2, 4) + "/" + data.substring(4);
     }
+    public static String desformatarData(String data) {
+        return data.replace("/", "");
+    }
 }

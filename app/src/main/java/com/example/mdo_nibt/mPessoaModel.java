@@ -1,9 +1,9 @@
 package com.example.mdo_nibt;
 
-public class Pessoa {
+public class mPessoaModel {
     public String nome;
 
-    public Pessoa(String nome, String meditacao, String decoracao, String oracao) {
+    public mPessoaModel(String nome, String meditacao, String decoracao, String oracao) {
         this.nome = nome;
         this.meditacao = meditacao;
         this.decoracao = decoracao;
