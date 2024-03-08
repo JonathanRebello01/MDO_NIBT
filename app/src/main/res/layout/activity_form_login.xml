@@ -32,55 +32,66 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo" />
 
-    <EditText
-        android:id="@+id/edit_email_login"
-        style="@style/Edit_Text"
-        android:hint="@string/e_mail_hint"
-        android:drawableRight="@drawable/ic_email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintEnd_toEndOf="@id/containerComponents"
-        app:layout_constraintTop_toTopOf="@id/containerComponents"
-        />
-
-
-    <EditText
-        android:id="@+id/edt_senha_login"
-        style="@style/Edit_Text"
-        android:hint="@string/senha_hint"
-        android:inputType="numberPassword"
-        app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintEnd_toEndOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@id/edit_email_login"
-        />
-
-    <ImageView
-        android:id="@+id/visualizar_senha_login"
-        android:src="@drawable/ic_eye"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/nome_jonathan"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="@id/edt_senha_login"
-        app:layout_constraintTop_toTopOf="@id/edt_senha_login"
-        app:layout_constraintBottom_toBottomOf="@id/edt_senha_login"
-        />
+        android:background="@drawable/black_circle_button"
+        android:padding="20dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_entrar"
-        style="@style/Button"
-        android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/green_button"
-        android:text="@string/entrar"
-        android:textAllCaps="false"
+        android:text="@string/nome_jonathan"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/containerComponents"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toTopOf="@id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintTop_toBottomOf="@id/edt_senha_login" />
+        app:layout_constraintBottom_toTopOf="@id/nome_ana"
+               />
+
+    <Button
+        android:id="@+id/nome_ana"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/black_circle_button"
+        android:padding="20dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
+        android:text="@string/nome_ana"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/nome_jonathan"
+        app:layout_constraintEnd_toEndOf="@id/containerComponents"
+        app:layout_constraintStart_toStartOf="@id/containerComponents"
+        app:layout_constraintBottom_toTopOf="@id/nome_caio"
+        />
+
+    <Button
+        android:id="@+id/nome_caio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/black_circle_button"
+        android:padding="20dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
+        android:text="@string/nome_caio"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/nome_ana"
+        app:layout_constraintEnd_toEndOf="@id/containerComponents"
+        app:layout_constraintStart_toStartOf="@id/containerComponents"
+        app:layout_constraintBottom_toBottomOf="@id/containerComponents"
+        />
+
+
+
 
     <ProgressBar
         android:id="@+id/login_progressbar"
@@ -98,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00FF0000"
-        android:text="@string/text_cadastro"
+        android:text="@string/text_exclusividade"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"

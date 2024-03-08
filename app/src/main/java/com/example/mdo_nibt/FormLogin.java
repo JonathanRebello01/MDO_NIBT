@@ -31,8 +31,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Objects;
 
 public class FormLogin extends AppCompatActivity {
-    private TextView text_tela_cadastro;
-    private Button bt_login;
+    private TextView nome_jonathan, nome_ana, nome_caio, text_tela_cadastro;
+    private Button bt_login_jonathan, bt_login_ana, bt_login_caio;
     private EditText edt_email, edt_senha;
     private ProgressBar progressBar;
     private ImageView visualizar_senha;
@@ -46,34 +46,30 @@ public class FormLogin extends AppCompatActivity {
         getSupportActionBar().hide();
         IniciarComponentes();
 
-        visualizar_senha.setOnClickListener(new View.OnClickListener() {
+        bt_login_jonathan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(password_invisible){
-                    edt_senha.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    password_invisible = false;
-                }
-
-                else {
-                    edt_senha.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                    password_invisible = true;
-                }
+                String email = "at.dimmer@gmail.com";
+                String senha = "123456";
+                    autenticarUsuario(v, email, senha);
             }
         });
 
-        bt_login.setOnClickListener(new View.OnClickListener() {
+        bt_login_ana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = edt_email.getText().toString();
-                String senha = edt_senha.getText().toString();
-                if(email.isEmpty() || senha.isEmpty()){
-                    Snackbar snackbar = Snackbar.make(v, "Preencha TODOS os campos ; )", Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-                else {
-                    autenticarUsuario(v);
-                }
+                String email = "frotaana2005@gmail.com";
+                String senha = "040520";
+                autenticarUsuario(v, email, senha);
+            }
+        });
+
+        bt_login_caio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = "verascaio11@hotmail.com";
+                String senha = "123456";
+                autenticarUsuario(v, email, senha);
             }
         });
 
@@ -86,33 +82,30 @@ public class FormLogin extends AppCompatActivity {
 
     }
 
-    private void autenticarUsuario(View v){
-
-        String email = edt_email.getText().toString();
-        String senha = edt_senha.getText().toString();
+    private void autenticarUsuario(View v, String email, String senha){
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if(task.isSuccessful()){
-                    progressBar.setVisibility(View.VISIBLE);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            telaPrincipal();
+                        if(task.isSuccessful()){
+                            progressBar.setVisibility(View.VISIBLE);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    telaPrincipal();
+                                }
+                            },0);
                         }
-                    },0);
-                }
-            }
-        })
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Snackbar snackbar = Snackbar.make(v, "Erro na tentativa de login" + e, Snackbar.LENGTH_SHORT);
-                snackbar.show();
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Snackbar snackbar = Snackbar.make(v, "Erro na tentativa de login" + e, Snackbar.LENGTH_SHORT);
+                        snackbar.show();
+                    }
+                });
     }
 
     @Override
@@ -134,14 +127,16 @@ public class FormLogin extends AppCompatActivity {
     private void IniciarComponentes(){
         text_tela_cadastro = findViewById(R.id.text_tela_cadastro);
 
-        bt_login = findViewById(R.id.bt_entrar);
+        bt_login_jonathan = findViewById(R.id.nome_jonathan);
+        bt_login_ana = findViewById(R.id.nome_ana);
+        bt_login_caio = findViewById(R.id.nome_caio);
 
         progressBar = findViewById(R.id.login_progressbar);
 
-        edt_email = findViewById(R.id.edit_email_login);
-        edt_senha = findViewById(R.id.edt_senha_login);
+//        edt_email = findViewById(R.id.edit_email_login);
+//        edt_senha = findViewById(R.id.edt_senha_login);
 
-        visualizar_senha = findViewById(R.id.visualizar_senha_login);
+//        visualizar_senha = findViewById(R.id.visualizar_senha_login);
     }
 
 }
