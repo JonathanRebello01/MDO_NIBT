@@ -38,9 +38,9 @@
     <string name="bt_enviar">Enviar</string>
 
 <!--Nomes de Contas-->
-    <string name="nome_jonathan">+ Jonathan +</string>
-    <string name="nome_ana">+ Ana Anjos +</string>
-    <string name="nome_caio">+ Caio +</string>
+    <string name="nome_vareta">+ Vareta +</string>
+    <string name="nome_bastao">+ Bastão +</string>
+    <string name="nome_barbante">+ Barbante +</string>
 
 <!--    Exclusividade-->
     <string name="text_exclusividade">App Exclusivo A.T</string>
