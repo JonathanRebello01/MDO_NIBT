@@ -185,24 +185,6 @@ public class ContadorActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        DocumentReference getPontuacaoTotal = banco_recuperar.collection( "NIBT" + "/" + "DINAMICAS" + "/" + ga_ministerio + "/").document("pontuacaoTotal");
-//
-//        getPontuacaoTotal.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-//                if(value != null) {
-//                    salvar_dimmer_total = value.getString("pontuacao_dimmer_total");
-//                    salvar_canon_total = value.getString("pontuacao_canon_total");
-//                    salvar_delay_total = value.getString("pontuacao_delay_total");
-//
-//                    System.out.println("twe + " + salvar_dimmer_total);
-//                    System.out.println("twe + " + salvar_canon_total);
-//                    System.out.println("twe + " + salvar_delay_total);
-//                }
-//            }
-//
-//        });
     }
     private void carregamentoCampos(){
         new Handler().postDelayed(new Runnable() {
@@ -317,7 +299,6 @@ public class ContadorActivity extends AppCompatActivity {
                         pontuada = new HashMap<String,String>();
                     }
 
-                    System.out.println("teste"+ pontuada.get("Dimmer"));
 
                     if(pontuada.get("Dimmer") == null){
                         salvar_dimmer_total = "0";
@@ -418,7 +399,7 @@ public class ContadorActivity extends AppCompatActivity {
                         }
                     }
 
-                    documentReference.update("pontuacao", pontuada)
+                    documentReference.set(pontuada)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
