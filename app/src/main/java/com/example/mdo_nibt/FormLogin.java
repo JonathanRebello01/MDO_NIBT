@@ -83,7 +83,6 @@ public class FormLogin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void autenticarUsuario(View v){
@@ -135,6 +134,7 @@ public class FormLogin extends AppCompatActivity {
         text_tela_cadastro = findViewById(R.id.text_tela_cadastro);
 
         bt_login = findViewById(R.id.bt_entrar);
+
 
         progressBar = findViewById(R.id.login_progressbar);
 

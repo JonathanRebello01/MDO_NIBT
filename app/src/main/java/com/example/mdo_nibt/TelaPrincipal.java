@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -26,6 +27,7 @@ public class TelaPrincipal extends AppCompatActivity {
 
     private TextView nomeUsuario, emailUsuario;
     private Button bt_deslogar, bt_cadastrarMDO, bt_historico;
+    private ImageView bt_ferramentas;
     FirebaseFirestore banco = FirebaseFirestore.getInstance();
     String usuarioID;
 
@@ -86,8 +88,13 @@ public class TelaPrincipal extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-
-
+        bt_ferramentas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TelaPrincipal.this, ContadorActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -98,6 +105,8 @@ public class TelaPrincipal extends AppCompatActivity {
         bt_deslogar = findViewById(R.id.btn_deslogar_telaprincipal);
         bt_cadastrarMDO = findViewById(R.id.btn_avancar_mdo_telaprincipal);
         bt_historico = findViewById(R.id.btn_ver_historico_telaprincipal);
+
+        bt_ferramentas = findViewById(R.id.ic_tools);
     }
 
     @Override

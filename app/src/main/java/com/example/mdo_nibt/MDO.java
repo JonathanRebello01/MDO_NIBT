@@ -38,7 +38,6 @@ public class MDO extends AppCompatActivity {
     private Boolean isGA = false;
     private FirebaseFirestore banco_recuperar = FirebaseFirestore.getInstance();
     private FirebaseFirestore banco_salvar = FirebaseFirestore.getInstance();
-    private List<String> data;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
