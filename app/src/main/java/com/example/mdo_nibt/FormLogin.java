@@ -3,10 +3,12 @@ package com.example.mdo_nibt;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,10 +23,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Objects;
-
 public class FormLogin extends AppCompatActivity {
-    private Button bt_login_vareta, bt_login_bastao, bt_login_barbante;
+    private TextView text_tela_cadastro;
+    private Button bt_login;
+    private EditText edt_email, edt_senha;
+    private ProgressBar progressBar;
+    private ImageView visualizar_senha;
+    boolean password_invisible = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,58 +39,72 @@ public class FormLogin extends AppCompatActivity {
         getSupportActionBar().hide();
         IniciarComponentes();
 
-        bt_login_vareta.setOnClickListener(new View.OnClickListener() {
+        visualizar_senha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "rebello.jonathan@gmail.com";
-                String senha = "123456";
-                    autenticarUsuario(v, email, senha);
+
+                if(password_invisible){
+                    edt_senha.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    password_invisible = false;
+                }
+
+                else {
+                    edt_senha.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                    password_invisible = true;
+                }
             }
         });
 
-        bt_login_bastao.setOnClickListener(new View.OnClickListener() {
+        bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "frotaana2005@gmail.com";
-                String senha = "040520";
-                autenticarUsuario(v, email, senha);
+                String email = edt_email.getText().toString();
+                String senha = edt_senha.getText().toString();
+                if(email.isEmpty() || senha.isEmpty()){
+                    Snackbar snackbar = Snackbar.make(v, "Preencha TODOS os campos ; )", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+                else {
+                    autenticarUsuario(v);
+                }
             }
         });
 
-        bt_login_barbante.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = "verascaio11@hotmail.com";
-                String senha = "123456";
-                autenticarUsuario(v, email, senha);
+        text_tela_cadastro.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                Intent intent = new Intent(FormLogin.this, FormCadastro.class);
+                startActivity(intent);
             }
         });
-
     }
 
-    private void autenticarUsuario(View v, String email, String senha){
+    private void autenticarUsuario(View v){
+
+        String email = edt_email.getText().toString();
+        String senha = edt_senha.getText().toString();
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if(task.isSuccessful()){
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    telaPrincipal();
-                                }
-                            },0);
+                if(task.isSuccessful()){
+                    progressBar.setVisibility(View.VISIBLE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            telaPrincipal();
                         }
-                    }
-                })
+                    },0);
+                }
+            }
+        })
                 .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Snackbar snackbar = Snackbar.make(v, "Erro na tentativa de login" + e, Snackbar.LENGTH_SHORT);
-                        snackbar.show();
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Snackbar snackbar = Snackbar.make(v, "Erro na tentativa de login" + e, Snackbar.LENGTH_SHORT);
+                snackbar.show();
+            }
+        });
     }
 
     @Override
@@ -105,11 +124,17 @@ public class FormLogin extends AppCompatActivity {
     }
 
     private void IniciarComponentes(){
+        text_tela_cadastro = findViewById(R.id.text_tela_cadastro);
 
-        bt_login_vareta = findViewById(R.id.nome_vareta);
-        bt_login_bastao = findViewById(R.id.nome_bastao);
-        bt_login_barbante = findViewById(R.id.nome_barbante);
+        bt_login = findViewById(R.id.bt_entrar);
 
+
+        progressBar = findViewById(R.id.login_progressbar);
+
+        edt_email = findViewById(R.id.edit_email_login);
+        edt_senha = findViewById(R.id.edt_senha_login);
+
+        visualizar_senha = findViewById(R.id.visualizar_senha_login);
     }
 
 }

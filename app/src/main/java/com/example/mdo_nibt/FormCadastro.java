@@ -176,7 +176,7 @@ public class FormCadastro extends AppCompatActivity {
                     salvarDadosUsuario();
 
                     FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(FormCadastro.this, FormLogin.class);
+                    Intent intent = new Intent(FormCadastro.this, FormLoginSimplificadoLog.class);
                     startActivity(intent);
                 }
                 else {

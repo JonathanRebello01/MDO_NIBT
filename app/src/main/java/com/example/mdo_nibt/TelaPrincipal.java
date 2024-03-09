@@ -8,14 +8,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.dialog.MaterialDialogs;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -80,7 +77,7 @@ public class TelaPrincipal extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 FirebaseAuth.getInstance().signOut();
-                                Intent intent = new Intent(TelaPrincipal.this, FormLogin.class);
+                                Intent intent = new Intent(TelaPrincipal.this, FormLoginSimplificadoLog.class);
                                 startActivity(intent);
                             }
 
@@ -96,13 +93,13 @@ public class TelaPrincipal extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-        bt_ferramentas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(TelaPrincipal.this, ContadorActivity.class);
-                startActivity(intent);
-            }
-        });
+//        bt_ferramentas.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(TelaPrincipal.this, ContadorActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -114,11 +111,11 @@ public class TelaPrincipal extends AppCompatActivity {
         bt_cadastrarMDO = findViewById(R.id.btn_avancar_mdo_telaprincipal);
         bt_historico = findViewById(R.id.btn_ver_historico_telaprincipal);
 
-        bt_ferramentas = findViewById(R.id.ic_tools);
-
-        txt_primeiro = findViewById(R.id.text_primeiro);
-        txt_segundo = findViewById(R.id.text_segundo);
-        txt_terceiro = findViewById(R.id.text_terceiro);
+//        bt_ferramentas = findViewById(R.id.ic_tools);
+//
+//        txt_primeiro = findViewById(R.id.text_primeiro);
+//        txt_segundo = findViewById(R.id.text_segundo);
+//        txt_terceiro = findViewById(R.id.text_terceiro);
     }
 
     @Override
@@ -151,39 +148,39 @@ public class TelaPrincipal extends AppCompatActivity {
                         ga_ministerio = documentSnapshot.getString("Ministerio");
                     }
                 }
-                DocumentReference get_pts = outro_banco.collection( "NIBT" + "/" + "DINAMICAS" + "/" + ga_ministerio + "/").document("pontuacaoTotal");
-                get_pts.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if(value != null){
-                            System.out.println("teste "+ value);
-                            Map getData = new HashMap<String,Object>();
-                            getData = value.getData();
-
-                            Map<String, String> pontuacaoMap = (Map<String, String>) getData.get("pontuacao");
-
-                            if(value.getData() != null){
-                                pts_dimmer = pontuacaoMap.get("Dimmer");
-                            }
-                            if(value.getData() != null){
-                                pts_canon = pontuacaoMap.get("Canon");
-                            }
-                            if(value.getData() != null){
-                                pts_delay = pontuacaoMap.get("Delay");
-                            }
-                            if (pts_dimmer != null){
-                                pontos_dimmer = Integer.parseInt(pts_dimmer);
-                            }
-                            if (pts_canon != null){
-                                pontos_canon = Integer.parseInt(pts_canon);
-                            }
-                            if (pts_delay != null){
-                                pontos_delay = Integer.parseInt(pts_delay);
-                            }
-                            ordenarRanking();
-                        }
-                    }
-                });
+//                DocumentReference get_pts = outro_banco.collection( "NIBT" + "/" + "DINAMICAS" + "/" + ga_ministerio + "/").document("pontuacaoTotal");
+//                get_pts.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        if(value != null){
+//                            System.out.println("teste "+ value);
+//                            Map getData = new HashMap<String,Object>();
+//                            getData = value.getData();
+//
+//                            Map<String, String> pontuacaoMap = (Map<String, String>) getData.get("pontuacao");
+//
+//                            if(value.getData() != null){
+//                                pts_dimmer = pontuacaoMap.get("Dimmer");
+//                            }
+//                            if(value.getData() != null){
+//                                pts_canon = pontuacaoMap.get("Canon");
+//                            }
+//                            if(value.getData() != null){
+//                                pts_delay = pontuacaoMap.get("Delay");
+//                            }
+//                            if (pts_dimmer != null){
+//                                pontos_dimmer = Integer.parseInt(pts_dimmer);
+//                            }
+//                            if (pts_canon != null){
+//                                pontos_canon = Integer.parseInt(pts_canon);
+//                            }
+//                            if (pts_delay != null){
+//                                pontos_delay = Integer.parseInt(pts_delay);
+//                            }
+//                            ordenarRanking();
+//                        }
+//                    }
+//                });
             }
         });
 
