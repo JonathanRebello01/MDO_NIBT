@@ -21,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class FormLogin extends AppCompatActivity {
     private Button bt_login_vareta, bt_login_bastao, bt_login_barbante;
 
@@ -35,7 +37,7 @@ public class FormLogin extends AppCompatActivity {
         bt_login_vareta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "@gmail.com";
+                String email = "rebello.jonathan@gmail.com";
                 String senha = "123456";
                     autenticarUsuario(v, email, senha);
             }
@@ -44,7 +46,7 @@ public class FormLogin extends AppCompatActivity {
         bt_login_bastao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "@gmail.com";
+                String email = "frotaana2005@gmail.com";
                 String senha = "040520";
                 autenticarUsuario(v, email, senha);
             }
@@ -53,7 +55,7 @@ public class FormLogin extends AppCompatActivity {
         bt_login_barbante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "@hotmail.com";
+                String email = "verascaio11@hotmail.com";
                 String senha = "123456";
                 autenticarUsuario(v, email, senha);
             }

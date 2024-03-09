@@ -153,6 +153,7 @@ public class FormCadastro extends AppCompatActivity {
         MINISTERIOS.add("Apoio Técnico");
         MINISTERIOS.add("Dança");
         MINISTERIOS.add("DNA");
+        MINISTERIOS.add("Logística");
         MINISTERIOS.add("NovaTeste");
 
         caixa_complete_ga_ministerios = findViewById(R.id.edit_ministerio_cadastro);
