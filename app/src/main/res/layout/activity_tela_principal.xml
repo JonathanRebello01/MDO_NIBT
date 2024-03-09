@@ -132,6 +132,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_ver_historico_telaprincipal"
+        android:visibility="invisible"
         />
     <TextView
         android:id="@+id/text_primeiro"
@@ -146,6 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_ranking"
+        android:visibility="invisible"
         />
     <TextView
         android:id="@+id/text_segundo"
@@ -160,6 +162,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_primeiro"
+        android:visibility="invisible"
         />
     <TextView
         android:id="@+id/text_terceiro"
@@ -174,6 +177,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_segundo"
+        android:visibility="invisible"
         />
 
     <Button
@@ -200,6 +204,7 @@
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
