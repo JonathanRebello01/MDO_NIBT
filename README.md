@@ -15,6 +15,12 @@ O objetivo do MDO-NIBT é oferecer um meio mais eficiente e preciso de coletar e
 
 Com o MDO-NIBT, espera-se que seja mais fácil para os líderes da NIBT acompanhar e incentivar a prática de Meditação, Decoração e Oração entre os membros, promovendo assim um maior envolvimento e crescimento espiritual na comunidade da igreja.
 
-
 <a href="http://picasion.com/"><img src="https://i.picasion.com/pic92/2c759393b0c3410d03d6c79c336b5341.gif" border="0" alt="http://picasion.com/" /></a><br /><a href="http://picasion.com/">http://picasion.com/</a>
 
+## Instruções para baixar o aplicativo:
+
+1. **Vá para a branch "teste/disponibiliza_apk".**
+   
+2. **Baixe o arquivo .apk**
+   
+3. **Instale o APK em seu dispositivo Android.**
