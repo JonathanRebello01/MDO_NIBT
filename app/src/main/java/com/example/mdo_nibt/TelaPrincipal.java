@@ -63,16 +63,15 @@ public class TelaPrincipal extends AppCompatActivity {
         btnSalvarNotas.setOnClickListener(v -> salvarNota());
 
         btnLimparNotas.setOnClickListener(v -> {
-            new MaterialAlertDialogBuilder(this) // Activity; em Fragment use requireContext()
+            new androidx.appcompat.app.AlertDialog.Builder(this)
                     .setTitle("Limpar anotações")
                     .setMessage("Tem certeza que deseja apagar o conteúdo das anotações?")
                     .setPositiveButton("Apagar", (dialog, which) -> {
                         anotacoes.setText("");
-                        salvarNota(); // persiste em branco
+                        salvarNota();
                         dialog.dismiss();
                     })
                     .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
-                    .setCancelable(true)
                     .show();
         });
 
