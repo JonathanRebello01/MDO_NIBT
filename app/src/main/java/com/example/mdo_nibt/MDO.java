@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MDO extends AppCompatActivity {
 
@@ -247,81 +248,50 @@ public class MDO extends AppCompatActivity {
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DocumentReference documentReference = banco_recuperar.collection("Usuarios").document(usuarioID);
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                if(documentSnapshot != null){
-                    if(documentSnapshot.getString("Lider") != null){
-                        ga_ministerio = documentSnapshot.getString("Lider");
-                        isGA = true;
-                    }
-                    else {
-                        ga_ministerio = documentSnapshot.getString("Ministerio");
-                    }
+        documentReference.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot != null) {
+                if (documentSnapshot.getString("Lider") != null) {
+                    ga_ministerio = documentSnapshot.getString("Lider");
+                    isGA = true;
+                } else {
+                    ga_ministerio = documentSnapshot.getString("Ministerio");
                 }
             }
         });
     }
 
     private void salvaDataFirestore() {
-            DocumentReference documentReferenceSalvarData = banco_salvar.collection("NIBT" + "/" + "historicoUsuarios" + "/" + "datas").document(usuarioID);
-            documentReferenceSalvarData.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    // Verifique se o documento já existe
-                    if (documentSnapshot.exists()) {
-                        // O documento já existe, então adicione a nova pessoa à lista existente
-                        List<String> data = (List<String>) documentSnapshot.get("data");
 
-                        assert data != null;
-                        if(!data.contains(Util.dataAtual())){
-                            data.add(Util.dataAtual());
-                        }
+        DocumentReference documentReferenceSalvarData =
+                banco_salvar.collection("NIBT/historicoUsuarios/datas")
+                        .document(usuarioID);
 
+        documentReferenceSalvarData.get().addOnSuccessListener(snapshot -> {
 
-                        // Atualize o documento com a lista atualizada
-                        documentReferenceSalvarData.update("data", data)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        // Dados atualizados com sucesso
-                                        Toast.makeText(getApplicationContext(), "Dados atualizados com sucesso", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // Trate falha ao atualizar dados
-                                        Toast.makeText(getApplicationContext(), "Erro ao atualizar dados", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
-                    else {
-                        // O documento não existe, crie um novo documento com a lista contendo a primeira pessoa
-                        List<String> data = new ArrayList<>();
-                        data.add(Util.dataAtual());
+            // Lista de datas
+            List<String> datas = new ArrayList<>();
 
-                        // Crie o novo documento
-                        documentReferenceSalvarData.set(new HashMap<String, Object>() {{
-                                    put("data", data);
-                                }})
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        // Dados adicionados com sucesso
-                                        Toast.makeText(getApplicationContext(), "Dados atualizados com sucesso", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // Trate falha ao adicionar dados
-                                        Toast.makeText(getApplicationContext(), "Erro ao adicionar dados", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
+            if (snapshot.exists()) {
+
+                List<String> firestoreDatas = (List<String>) snapshot.get("data");
+
+                if (firestoreDatas != null) {
+                    datas.addAll(firestoreDatas);
                 }
-            });
+            }
+
+            // Se a data de hoje ainda não foi registrada, adiciona
+            String hoje = Util.dataAtual();
+            if (!datas.contains(hoje)) {
+                datas.add(hoje);
+            }
+
+            // Salva a lista no Firestore (update/set automático)
+            Map<String, Object> dado = new HashMap<>();
+            dado.put("data", datas);
+
+            documentReferenceSalvarData.set(dado);
+        });
     }
 
     private void carregamentoCampos(){
@@ -337,8 +307,8 @@ public class MDO extends AppCompatActivity {
                 ic_decoracao.setVisibility(View.INVISIBLE);
                 ic_oracao.setVisibility(View.INVISIBLE);
                 mdo_progressbar.setVisibility(View.VISIBLE);
-                isAtrasado.setVisibility(View.INVISIBLE);
-                isfaltou.setVisibility(View.INVISIBLE);
+                //isAtrasado.setVisibility(View.INVISIBLE);
+                //isfaltou.setVisibility(View.INVISIBLE);
             }
         }, 0);
         new Handler().postDelayed(new Runnable() {
@@ -353,9 +323,9 @@ public class MDO extends AppCompatActivity {
                 ic_decoracao.setVisibility(View.VISIBLE);
                 ic_oracao.setVisibility(View.VISIBLE);
                 mdo_progressbar.setVisibility(View.INVISIBLE);
-                isAtrasado.setVisibility(View.VISIBLE);
-                isfaltou.setVisibility(View.VISIBLE);
+                //isAtrasado.setVisibility(View.VISIBLE);
+                //isfaltou.setVisibility(View.VISIBLE);
             }
-        }, 1000);
+        }, 900);
     }
 }

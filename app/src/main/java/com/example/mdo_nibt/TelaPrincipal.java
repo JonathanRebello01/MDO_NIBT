@@ -5,15 +5,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -26,84 +26,68 @@ import java.util.Map;
 public class TelaPrincipal extends AppCompatActivity {
 
     private TextView nomeUsuario, emailUsuario, txt_primeiro, txt_segundo, txt_terceiro;
-    private Button bt_deslogar, bt_cadastrarMDO, bt_historico;
+    private Button bt_deslogar, bt_cadastrarMDO, bt_historico, btnLimparNotas, btnSalvarNotas;
     private ImageView bt_ferramentas;
-    FirebaseFirestore banco = FirebaseFirestore.getInstance();
-    FirebaseFirestore outro_banco = FirebaseFirestore.getInstance();
-    String usuarioID, ga_ministerio;
-    String pts_dimmer, pts_canon, pts_delay;
-    int pontos_dimmer;
-    int pontos_canon;
-    int pontos_delay;
+
+    // 🔵 Bloco de notas (simples)
+    private EditText anotacoes;
+    private Button btn_salvar_notas;
+
+    private final FirebaseFirestore banco = FirebaseFirestore.getInstance();
+    private String usuarioID, ga_ministerio;
+    private String pts_dimmer, pts_canon, pts_delay;
+    private int pontos_dimmer;
+    private int pontos_canon;
+    private int pontos_delay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_principal);
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
+
         iniciarComponentes();
-        bt_cadastrarMDO.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent(TelaPrincipal.this, MDO.class);
-                startActivity(intent);
-
-            }
+        bt_cadastrarMDO.setOnClickListener(v -> {
+            Intent intent = new Intent(TelaPrincipal.this, MDO.class);
+            startActivity(intent);
         });
 
-        bt_historico.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(TelaPrincipal.this, Historico.class);
-                startActivity(intent);
-
-            }
+        bt_historico.setOnClickListener(v -> {
+            Intent intent = new Intent(TelaPrincipal.this, Historico.class);
+            startActivity(intent);
         });
 
-        bt_deslogar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnSalvarNotas.setOnClickListener(v -> salvarNota());
 
-                AlertDialog alertDialog = new AlertDialog.Builder(
-                        TelaPrincipal.this).create();
-                alertDialog.setTitle("Deslogar usuário");
-                alertDialog
-                        .setMessage("Você tem certeza que deseja desconectar?");
-                alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Ok",
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                FirebaseAuth.getInstance().signOut();
-                                Intent intent = new Intent(TelaPrincipal.this, FormLoginSimplificadoLog.class);
-                                startActivity(intent);
-                            }
-
-                        });
-                alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Cancel",
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                alertDialog.show();
-            }
+        btnLimparNotas.setOnClickListener(v -> {
+            anotacoes.setText("");
+            salvarNota();
         });
-//        bt_ferramentas.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(TelaPrincipal.this, ContadorActivity.class);
-//                startActivity(intent);
-//            }
+
+        bt_deslogar.setOnClickListener(v -> {
+            AlertDialog alertDialog = new AlertDialog.Builder(TelaPrincipal.this).create();
+            alertDialog.setTitle("Deslogar usuário");
+            alertDialog.setMessage("Você tem certeza que deseja desconectar?");
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE, "Ok",
+                    (dialog, which) -> {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(TelaPrincipal.this, FormLoginSimplificadoLog.class);
+                        startActivity(intent);
+                        finish(); // ✅ encerra a Activity atual
+                    });
+            alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "Cancelar",
+                    (dialog, which) -> {});
+            alertDialog.show();
+        });
+
+//        bt_ferramentas.setOnClickListener(v -> {
+//            Intent intent = new Intent(TelaPrincipal.this, ContadorActivity.class);
+//            startActivity(intent);
 //        });
-
     }
 
-    private void iniciarComponentes(){
+    private void iniciarComponentes() {
         nomeUsuario = findViewById(R.id.text_nome_usuario_telaprincipal);
         emailUsuario = findViewById(R.id.text_email_usuario_telaprincipal);
 
@@ -111,8 +95,13 @@ public class TelaPrincipal extends AppCompatActivity {
         bt_cadastrarMDO = findViewById(R.id.btn_avancar_mdo_telaprincipal);
         bt_historico = findViewById(R.id.btn_ver_historico_telaprincipal);
 
+        // 🔵 IDs do bloco de notas (precisam existir no XML)
+        anotacoes = findViewById(R.id.anotacoes);
+        btn_salvar_notas = findViewById(R.id.btn_salvar_notas);
+        btnSalvarNotas = findViewById(R.id.btn_salvar_notas);
+        btnLimparNotas = findViewById(R.id.btn_limpar_notas);
+
 //        bt_ferramentas = findViewById(R.id.ic_tools);
-//
 //        txt_primeiro = findViewById(R.id.text_primeiro);
 //        txt_segundo = findViewById(R.id.text_segundo);
 //        txt_terceiro = findViewById(R.id.text_terceiro);
@@ -122,14 +111,42 @@ public class TelaPrincipal extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        String email =FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            // ✅ segurança: se não estiver logado, volta pro login
+            startActivity(new Intent(this, FormLoginSimplificadoLog.class));
+            finish();
+            return;
+        }
 
+        String email = user.getEmail();
+        usuarioID = user.getUid();
+
+        // 🔵 Carregar anotação única do Firestore (listener em tempo real)
+        DocumentReference refNota = banco
+                .collection("Usuarios")
+                .document(usuarioID)
+                .collection("Notas")
+                .document("AnotacaoUnica");
+
+        refNota.addSnapshotListener((snapshot, error) -> {
+            if (error != null) return;
+            if (snapshot != null && snapshot.exists()) {
+                String texto = snapshot.getString("texto");
+                if (texto != null && !texto.equals(anotacoes.getText().toString())) {
+                    anotacoes.setText(texto);
+                }
+            }
+        });
+
+        // 🔵 Seus listeners já existentes
         DocumentReference documentReference = banco.collection("Usuarios").document(usuarioID);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                if(documentSnapshot != null){
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
+                                @Nullable FirebaseFirestoreException error) {
+                if (error != null) return;
+                if (documentSnapshot != null) {
                     nomeUsuario.setText(documentSnapshot.getString("Nome"));
                     emailUsuario.setText(email);
                 }
@@ -139,84 +156,71 @@ public class TelaPrincipal extends AppCompatActivity {
         DocumentReference documentReference2 = banco.collection("Usuarios").document(usuarioID);
         documentReference2.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                if(documentSnapshot != null){
-                    if(documentSnapshot.getString("Lider") != null){
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
+                                @Nullable FirebaseFirestoreException error) {
+                if (error != null) return;
+                if (documentSnapshot != null) {
+                    if (documentSnapshot.getString("Lider") != null) {
                         ga_ministerio = documentSnapshot.getString("Lider");
-                    }
-                    else {
+                    } else {
                         ga_ministerio = documentSnapshot.getString("Ministerio");
                     }
                 }
-//                DocumentReference get_pts = outro_banco.collection( "NIBT" + "/" + "DINAMICAS" + "/" + ga_ministerio + "/").document("pontuacaoTotal");
-//                get_pts.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-//                        if(value != null){
-//                            System.out.println("teste "+ value);
-//                            Map getData = new HashMap<String,Object>();
-//                            getData = value.getData();
-//
-//                            Map<String, String> pontuacaoMap = (Map<String, String>) getData.get("pontuacao");
-//
-//                            if(value.getData() != null){
-//                                pts_dimmer = pontuacaoMap.get("Dimmer");
-//                            }
-//                            if(value.getData() != null){
-//                                pts_canon = pontuacaoMap.get("Canon");
-//                            }
-//                            if(value.getData() != null){
-//                                pts_delay = pontuacaoMap.get("Delay");
-//                            }
-//                            if (pts_dimmer != null){
-//                                pontos_dimmer = Integer.parseInt(pts_dimmer);
-//                            }
-//                            if (pts_canon != null){
-//                                pontos_canon = Integer.parseInt(pts_canon);
-//                            }
-//                            if (pts_delay != null){
-//                                pontos_delay = Integer.parseInt(pts_delay);
-//                            }
-//                            ordenarRanking();
-//                        }
-//                    }
-//                });
+                // Seu código do ranking está comentado no original; mantendo assim
             }
         });
-
     }
 
-    private void ordenarRanking(){
+    // 🔵 Salva o conteúdo do EditText em um único documento no Firestore
+    private void salvarNota() {
+        if (usuarioID == null) return;
+
+        String texto = anotacoes.getText().toString();
+
+        Map<String, Object> dado = new HashMap<>();
+        dado.put("texto", texto);
+
+        banco.collection("Usuarios")
+                .document(usuarioID)
+                .collection("Notas")
+                .document("AnotacaoUnica")
+                .set(dado)
+                .addOnSuccessListener(a ->
+                        Toast.makeText(this, "Anotação salva!", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Falha ao salvar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    private void ordenarRanking() {
         if (pontos_dimmer >= pontos_canon && pontos_dimmer >= pontos_delay) {
             if (pontos_canon >= pontos_delay) {
-                txt_primeiro.setText("1° Lugar: " + "Dimmer" + " => " + pontos_dimmer + " Pontos!");
-                txt_segundo.setText("2° Lugar: " + "Canon" + " => " + pontos_canon + " Pontos!");
-                txt_terceiro.setText("3° Lugar: " + "Delay" + " => " + pontos_delay + " Pontos!");
-
+                txt_primeiro.setText("1° Lugar: Dimmer => " + pontos_dimmer + " Pontos!");
+                txt_segundo.setText("2° Lugar: Canon  => " + pontos_canon + " Pontos!");
+                txt_terceiro.setText("3° Lugar: Delay  => " + pontos_delay + " Pontos!");
             } else {
-                txt_primeiro.setText("1° Lugar: " + "Dimmer" + " => " + pontos_dimmer + " Pontos!");
-                txt_segundo.setText("2° Lugar: " + "Delay" + " => " + pontos_delay + " Pontos!");
-                txt_terceiro.setText("3° Lugar: " + "Canon" + " => " + pontos_canon + " Pontos!");
+                txt_primeiro.setText("1° Lugar: Dimmer => " + pontos_dimmer + " Pontos!");
+                txt_segundo.setText("2° Lugar: Delay  => " + pontos_delay + " Pontos!");
+                txt_terceiro.setText("3° Lugar: Canon  => " + pontos_canon + " Pontos!");
             }
         } else if (pontos_canon >= pontos_dimmer && pontos_canon >= pontos_delay) {
             if (pontos_dimmer >= pontos_delay) {
-                txt_primeiro.setText("1° Lugar: " + "Canon" + " => " + pontos_canon + " Pontos!");
-                txt_segundo.setText("2° Lugar: " + "Dimmer" + " => " + pontos_dimmer + " Pontos!");
-                txt_terceiro.setText("3° Lugar: " + "Delay" + " => " + pontos_delay + " Pontos!");
+                txt_primeiro.setText("1° Lugar: Canon  => " + pontos_canon + " Pontos!");
+                txt_segundo.setText("2° Lugar: Dimmer => " + pontos_dimmer + " Pontos!");
+                txt_terceiro.setText("3° Lugar: Delay  => " + pontos_delay + " Pontos!");
             } else {
-                txt_primeiro.setText("1° Lugar: " + "Canon" + " => " + pontos_canon + " Pontos!");
-                txt_segundo.setText("2° Lugar: " + "Delay" + " => " + pontos_delay + " Pontos!");
-                txt_terceiro.setText("3° Lugar: " + "Dimmer" + " => " + pontos_dimmer + " Pontos!");
+                txt_primeiro.setText("1° Lugar: Canon  => " + pontos_canon + " Pontos!");
+                txt_segundo.setText("2° Lugar: Delay  => " + pontos_delay + " Pontos!");
+                txt_terceiro.setText("3° Lugar: Dimmer => " + pontos_dimmer + " Pontos!");
             }
         } else {
             if (pontos_dimmer >= pontos_canon) {
-                txt_primeiro.setText("1° Lugar: " + "Delay" + " => " + pontos_delay + " Pontos!");
-                txt_segundo.setText("2° Lugar: " + "Dimmer" + " => " + pontos_dimmer + " Pontos!");
-                txt_terceiro.setText("3° Lugar: " + "Canon" + " => " + pontos_canon + " Pontos!");
+                txt_primeiro.setText("1° Lugar: Delay  => " + pontos_delay + " Pontos!");
+                txt_segundo.setText("2° Lugar: Dimmer => " + pontos_dimmer + " Pontos!");
+                txt_terceiro.setText("3° Lugar: Canon  => " + pontos_canon + " Pontos!");
             } else {
-                txt_primeiro.setText("1° Lugar: " + "Delay" + " => " + pontos_delay + " Pontos!");
-                txt_segundo.setText("2° Lugar: " + "Canon" + " => " + pontos_canon + " Pontos!");
-                txt_terceiro.setText("3° Lugar: " + "Dimmer" + " => " + pontos_dimmer + " Pontos!");
+                txt_primeiro.setText("1° Lugar: Delay  => " + pontos_delay + " Pontos!");
+                txt_segundo.setText("2° Lugar: Canon  => " + pontos_canon + " Pontos!");
+                txt_terceiro.setText("3° Lugar: Dimmer => " + pontos_dimmer + " Pontos!");
             }
         }
     }
