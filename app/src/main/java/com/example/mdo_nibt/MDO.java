@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class MDO extends AppCompatActivity {
     private EditText edt_nome_mdo, edt_meditacao, edt_decoracao, edt_oracao;
     private Button btn_adicionar_mdo, btn_voltar;
     private ImageView ic_usuario, ic_meditacao, ic_decoracao, ic_oracao;
+    private Switch isAtrasado, isfaltou;
     private ProgressBar mdo_progressbar;
     private String usuarioID;
     private String ga_ministerio;
@@ -53,10 +55,13 @@ public class MDO extends AppCompatActivity {
                 String meditacao = edt_meditacao.getText().toString();
                 String decoracao = edt_decoracao.getText().toString();
                 String oracao = edt_oracao.getText().toString();
+                boolean faltou = isfaltou.isChecked();
+                boolean atrasou = isAtrasado.isChecked();
+
 
                 salvaDataFirestore();
 
-                mPessoaModel pessoa = new mPessoaModel(nome, meditacao, decoracao, oracao);
+                mPessoaModel pessoa = new mPessoaModel(nome, meditacao, decoracao, oracao, faltou, atrasou);
                 usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 if(isGA){
                     DocumentReference documentReference = banco_salvar.collection( "NIBT" + "/" + "GAs" + "/" + ga_ministerio + "/" + Util.dataAtual() + "/" + "MDOs").document(usuarioID);
@@ -84,6 +89,8 @@ public class MDO extends AppCompatActivity {
                                                 edt_meditacao.setText("");
                                                 edt_decoracao.setText("");
                                                 edt_oracao.setText("");
+                                                isAtrasado.setChecked(false);
+                                                isAtrasado.setChecked(false);
                                                 carregamentoCampos();
                                             }
                                         })
@@ -112,6 +119,8 @@ public class MDO extends AppCompatActivity {
                                                 edt_meditacao.setText("");
                                                 edt_decoracao.setText("");
                                                 edt_oracao.setText("");
+                                                isAtrasado.setChecked(false);
+                                                isAtrasado.setChecked(false);
                                                 carregamentoCampos();
                                             }
                                         })
@@ -152,6 +161,8 @@ public class MDO extends AppCompatActivity {
                                                 edt_meditacao.setText("");
                                                 edt_decoracao.setText("");
                                                 edt_oracao.setText("");
+                                                isAtrasado.setChecked(false);
+                                                isAtrasado.setChecked(false);
                                                 carregamentoCampos();
                                             }
                                         })
@@ -180,6 +191,8 @@ public class MDO extends AppCompatActivity {
                                                 edt_meditacao.setText("");
                                                 edt_decoracao.setText("");
                                                 edt_oracao.setText("");
+                                                isAtrasado.setChecked(false);
+                                                isAtrasado.setChecked(false);
                                                 carregamentoCampos();
                                             }
                                         })
@@ -222,6 +235,9 @@ public class MDO extends AppCompatActivity {
         ic_meditacao = findViewById(R.id.iconeMeditacao);
         ic_decoracao = findViewById(R.id.iconeDecoracao);
         ic_oracao = findViewById(R.id.iconeOracao);
+
+        isAtrasado = findViewById(R.id.sw_atrasado);
+        isfaltou = findViewById(R.id.sw_faltou);
     }
 
     @Override
@@ -321,6 +337,8 @@ public class MDO extends AppCompatActivity {
                 ic_decoracao.setVisibility(View.INVISIBLE);
                 ic_oracao.setVisibility(View.INVISIBLE);
                 mdo_progressbar.setVisibility(View.VISIBLE);
+                isAtrasado.setVisibility(View.INVISIBLE);
+                isfaltou.setVisibility(View.INVISIBLE);
             }
         }, 0);
         new Handler().postDelayed(new Runnable() {
@@ -335,7 +353,9 @@ public class MDO extends AppCompatActivity {
                 ic_decoracao.setVisibility(View.VISIBLE);
                 ic_oracao.setVisibility(View.VISIBLE);
                 mdo_progressbar.setVisibility(View.INVISIBLE);
+                isAtrasado.setVisibility(View.VISIBLE);
+                isfaltou.setVisibility(View.VISIBLE);
             }
-        }, 1500);
+        }, 1000);
     }
 }

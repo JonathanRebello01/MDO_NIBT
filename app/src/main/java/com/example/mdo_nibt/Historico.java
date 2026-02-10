@@ -65,6 +65,7 @@ public class Historico extends AppCompatActivity implements RecyclerViewInterfac
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(value != null){
+                    if(value.getData() != null && value.getData().get("data") != null){
                     listaDatas = (ArrayList<String>)value.getData().get("data");
 
                     assert listaDatas != null;
@@ -73,9 +74,12 @@ public class Historico extends AppCompatActivity implements RecyclerViewInterfac
                         listaFormatada.add(dataFormatada);
                     }
 
-                    HistoricoAdapter historicoAdapter = new HistoricoAdapter((ArrayList<String>) listaFormatada, Historico.this::onItemClick);
-                    rv_historico.setAdapter(historicoAdapter);
-                    rv_historico.setLayoutManager(new LinearLayoutManager(ctx));
+                    if(listaFormatada != null){
+                        HistoricoAdapter historicoAdapter = new HistoricoAdapter((ArrayList<String>) listaFormatada, Historico.this::onItemClick);
+                        rv_historico.setAdapter(historicoAdapter);
+                        rv_historico.setLayoutManager(new LinearLayoutManager(ctx));
+                    }
+                }
                 }
             }
         });

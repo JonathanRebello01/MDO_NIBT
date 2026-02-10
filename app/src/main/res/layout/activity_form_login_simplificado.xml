@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
-        android:id="@+id/nome_vareta"
+        android:id="@+id/btn_nobreak"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/black_circle_button"
@@ -42,7 +42,7 @@
         android:layout_marginEnd="80dp"
         android:layout_marginStart="80dp"
 
-        android:text="+ Basto +"
+        android:text="+ Nobreak +"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -50,42 +50,42 @@
         app:layout_constraintTop_toTopOf="@id/containerComponents"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintBottom_toTopOf="@id/nome_bastao"
+        app:layout_constraintBottom_toTopOf="@id/btn_sinal"
                />
 
     <Button
-        android:id="@+id/nome_bastao"
+        android:id="@+id/btn_sinal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/black_circle_button"
         android:padding="20dp"
         android:layout_marginEnd="80dp"
         android:layout_marginStart="80dp"
-        android:text="+ Vareta +"
+        android:text="+ Sinal +"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@id/nome_vareta"
+        app:layout_constraintTop_toBottomOf="@id/btn_nobreak"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
-        app:layout_constraintBottom_toTopOf="@id/nome_barbante"
+        app:layout_constraintBottom_toTopOf="@id/btn_dmx"
         />
 
     <Button
-        android:id="@+id/nome_barbante"
+        android:id="@+id/btn_dmx"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/black_circle_button"
         android:padding="20dp"
         android:layout_marginEnd="80dp"
         android:layout_marginStart="80dp"
-        android:text="+ Barbante +"
+        android:text="+ Dmx +"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@id/nome_bastao"
+        app:layout_constraintTop_toBottomOf="@id/btn_sinal"
         app:layout_constraintEnd_toEndOf="@id/containerComponents"
         app:layout_constraintStart_toStartOf="@id/containerComponents"
         app:layout_constraintBottom_toBottomOf="@id/containerComponents"

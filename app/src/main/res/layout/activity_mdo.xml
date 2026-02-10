@@ -42,9 +42,9 @@
         android:id="@+id/containerComponents"
         style="@style/Containercomponents"
         android:layout_width="match_parent"
-        android:padding="30dp"
         android:layout_height="400dp"
         android:layout_marginTop="20dp"
+        android:padding="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view" />
@@ -186,6 +186,27 @@
         app:layout_constraintTop_toTopOf="@id/containerComponents"
         app:layout_constraintBottom_toBottomOf="@id/containerComponents"
         android:visibility="invisible"
+        />
+
+    <Switch
+        android:id="@+id/sw_atrasado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atrasado"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_adicionar_mdo"
+        app:layout_constraintStart_toStartOf="@id/edt_meditacao"
+        app:layout_constraintTop_toBottomOf="@+id/edt_meditacao" />
+
+    <Switch
+        android:id="@+id/sw_faltou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Faltou"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/btn_adicionar_mdo"
+        app:layout_constraintEnd_toEndOf="@+id/edt_oracao"
+        app:layout_constraintTop_toBottomOf="@+id/edt_oracao"
         />
 
 

@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class FormLoginSimplificadoLog extends AppCompatActivity {
-    private Button bt_login_vareta, bt_login_bastao, bt_login_barbante;
+    private Button bt_nobreak, bt_sinal, bt_dmx;
     private TextView text_tela_login_email;
 
     @Override
@@ -31,28 +31,28 @@ public class FormLoginSimplificadoLog extends AppCompatActivity {
         getSupportActionBar().hide();
         IniciarComponentes();
 
-        bt_login_vareta.setOnClickListener(new View.OnClickListener() {
+        bt_nobreak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "logistica.bastao@gmail.com";
+                String email = "at.Nobreak@gmail.com";
                 String senha = "123456";
                     autenticarUsuario(v, email, senha);
             }
         });
 
-        bt_login_bastao.setOnClickListener(new View.OnClickListener() {
+        bt_sinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "logistica.vareta@gmail.com";
+                String email = "at.Sinal@gmail.com";
                 String senha = "123456";
                 autenticarUsuario(v, email, senha);
             }
         });
 
-        bt_login_barbante.setOnClickListener(new View.OnClickListener() {
+        bt_dmx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = "logistica.barbante@gmail.com";
+                String email = "at.Dmx@gmail.com";
                 String senha = "123456";
                 autenticarUsuario(v, email, senha);
             }
@@ -111,9 +111,9 @@ public class FormLoginSimplificadoLog extends AppCompatActivity {
 
     private void IniciarComponentes(){
 
-        bt_login_vareta = findViewById(R.id.nome_vareta);
-        bt_login_bastao = findViewById(R.id.nome_bastao);
-        bt_login_barbante = findViewById(R.id.nome_barbante);
+        bt_nobreak = findViewById(R.id.btn_nobreak);
+        bt_sinal = findViewById(R.id.btn_sinal);
+        bt_dmx = findViewById(R.id.btn_dmx);
 
         text_tela_login_email = findViewById(R.id.text_tela_cadastro_login_simplificado);
 

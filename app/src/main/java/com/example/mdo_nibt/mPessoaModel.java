@@ -3,11 +3,16 @@ package com.example.mdo_nibt;
 public class mPessoaModel {
     public String nome;
 
-    public mPessoaModel(String nome, String meditacao, String decoracao, String oracao) {
+    public boolean faltou;
+    public  boolean atrasou;
+
+    public mPessoaModel(String nome, String meditacao, String decoracao, String oracao, boolean faltou, boolean atrasou) {
         this.nome = nome;
         this.meditacao = meditacao;
         this.decoracao = decoracao;
         this.oracao = oracao;
+        this.faltou = faltou;
+        this.atrasou = atrasou;
     }
 
     public String getNome() {
