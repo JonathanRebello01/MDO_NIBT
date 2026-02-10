@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -61,8 +63,17 @@ public class TelaPrincipal extends AppCompatActivity {
         btnSalvarNotas.setOnClickListener(v -> salvarNota());
 
         btnLimparNotas.setOnClickListener(v -> {
-            anotacoes.setText("");
-            salvarNota();
+            new MaterialAlertDialogBuilder(this) // Activity; em Fragment use requireContext()
+                    .setTitle("Limpar anotações")
+                    .setMessage("Tem certeza que deseja apagar o conteúdo das anotações?")
+                    .setPositiveButton("Apagar", (dialog, which) -> {
+                        anotacoes.setText("");
+                        salvarNota(); // persiste em branco
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                    .setCancelable(true)
+                    .show();
         });
 
         bt_deslogar.setOnClickListener(v -> {
