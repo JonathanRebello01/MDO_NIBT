@@ -16,7 +16,10 @@
             android:name=".VisualizacaoMDO"
             android:exported="false" />
         <activity android:name=".Historico" />
-        <activity android:name=".TelaPrincipal" />
+        <activity android:name=".TelaPrincipal"
+            android:windowSoftInputMode="adjustResize"
+
+            />
         <activity android:name=".MainActivity" />
         <activity android:name=".FormCadastro" />
         <activity android:name=".ContadorActivity" />
